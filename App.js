@@ -1,24 +1,31 @@
-import React, { Suspense, lazy } from 'react';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
-import Skeleton from './Skeleton';
-import { NavigationContainer } from '@react-navigation/native'; // Import NavigationContainer
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Start from './app/screens/authscreens/startscreen/start';
+import Login from './app/screens/authscreens/loginscreen/login';
 
-// Lazy load the Login component
-const Start = lazy(() => import('./app/screens/authscreens/startscreen/start'));
-const Login = lazy(() => import('./app/screens/authscreens/loginscreen/login'))
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
       <View style={styles.container}>
-        {/* Use Suspense to handle the loading state while the Start component is being loaded */}
-        <Suspense fallback={<Skeleton />}>
-          <Start />
-          <Login />
-        </Suspense>
-        <StatusBar style="auto" />
+        <Stack.Navigator initialRouteName="Start">
+          <Stack.Screen
+            name="Start"
+            component={Start}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
       </View>
+      <StatusBar style="auto" />
     </NavigationContainer>
   );
 }

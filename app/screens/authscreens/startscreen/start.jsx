@@ -1,8 +1,9 @@
 import React from 'react';
 import { Text, View, Image, StyleSheet, TouchableOpacity, Linking } from 'react-native';
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
 import LoginImage from '../../../../assets/images/login/login-bg.jpg';
 import Colors from '../../../utils/Colors';
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
+import { Feather } from '@expo/vector-icons';
 
 export default function Start() {
   const navigation = useNavigation(); // Get navigation object using useNavigation hook
@@ -30,20 +31,28 @@ export default function Start() {
       />
       <View style={styles.subContainer}>
         <Text style={{ fontSize: 27, color: Colors.WHITE, textAlign: 'center', paddingTop: 15 }}>
-          Welcome Back
+          Welcome 
         </Text>
         <Text style={{ fontSize: 18, textAlign: 'center', color: Colors.WHITE, marginTop: 15 }}>
-          Login to manage your daily tasks
+          Login to manage your daily tasks or reset your password
         </Text>
         <TouchableOpacity
           style={styles.button}
           onPress={handleGetStarted} // Call handleGetStarted function when button is pressed
         >
           <Text style={{ fontSize: 18, textAlign: 'center', color: Colors.PRIMARY }}>
-            Let's Get Started
+            Continue to Login  <Feather name="arrow-right" size={14} color={Colors.PRIMARY} style={{ marginLeft: 10 }} />
           </Text>
         </TouchableOpacity>
-        <Text style={{ fontSize: 14, textAlign: 'center', color: Colors.BLACK, marginTop: 45 }}>
+        <TouchableOpacity
+          style={styles.clearButton}
+          onPress={handleGetStarted} // Call handleGetStarted function when button is pressed
+        >
+          <Text style={{ fontSize: 18, textAlign: 'center', color: Colors.WHITE }}>
+            Reset Password ?
+          </Text>
+        </TouchableOpacity>
+        <Text style={{ fontSize: 14, textAlign: 'center', color: Colors.BLACK, marginTop: 15 }}>
           © copywright, Almanissoko {currentYear}
         </Text>
         <TouchableOpacity onPress={handleTaraseTechnologiesLink}>
@@ -79,5 +88,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
     borderRadius: 99,
     marginTop: 40
+  },
+  clearButton: {
+    padding: 15,
+    backgroundColor: Colors.TRANSAPARENT,
+    borderRadius: 99,
+    marginTop: 10
   }
 });
