@@ -16,6 +16,10 @@ export default function Start() {
     navigation.navigate('Login'); // Navigate to the login screen
   };
 
+  const handleResetPassword = () => {
+    navigation.navigate('Reset'); // Navigate to the login screen
+  };
+
   // Function to handle onPress event for the Tarase Technologies link
   const handleTaraseTechnologiesLink = () => {
     // Replace 'https://tarasetechnologies.com' with the actual URL
@@ -46,7 +50,7 @@ export default function Start() {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.clearButton}
-          onPress={handleGetStarted} // Call handleGetStarted function when button is pressed
+          onPress={handleResetPassword} // Call handleGetStarted function when button is pressed
         >
           <Text style={{ fontSize: 18, textAlign: 'center', color: Colors.WHITE }}>
             Reset Password ?
@@ -69,7 +73,7 @@ const styles = StyleSheet.create({
   loginImage: {
     width: '100%',
     height: 670,
-    marginTop: -100,
+    marginTop: -110,
     borderWidth: 0,
     borderColor: Colors.BLACK,
     borderRadius: 15

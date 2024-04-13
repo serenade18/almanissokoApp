@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Start from './app/screens/authscreens/startscreen/start';
 import Login from './app/screens/authscreens/loginscreen/login';
+import ResetPassword from './app/screens/authscreens/resetpasswordScreen/resetPassword';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,11 @@ export default function App() {
           <Stack.Screen
             name="Login"
             component={Login}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Reset"
+            component={ResetPassword}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
