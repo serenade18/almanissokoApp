@@ -1,11 +1,19 @@
 import React from 'react';
 import { Text, View, Image, StyleSheet, TouchableOpacity, Linking } from 'react-native';
-import LoginImage from '../../../assets/images/login/login-bg.jpg';
-import Colors from '../../utils/Colors';
+import LoginImage from '../../../../assets/images/login/login-bg.jpg';
+import Colors from '../../../utils/Colors';
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
 
-export default function Login() {
+export default function Start() {
+  const navigation = useNavigation(); // Get navigation object using useNavigation hook
+
   // Get current year
   const currentYear = new Date().getFullYear();
+
+  // Function to handle onPress event for the "Let's Get Started" button
+  const handleGetStarted = () => {
+    navigation.navigate('Login'); // Navigate to the login screen
+  };
 
   // Function to handle onPress event for the Tarase Technologies link
   const handleTaraseTechnologiesLink = () => {
@@ -29,7 +37,7 @@ export default function Login() {
         </Text>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => console.log("Button Click")}
+          onPress={handleGetStarted} // Call handleGetStarted function when button is pressed
         >
           <Text style={{ fontSize: 18, textAlign: 'center', color: Colors.PRIMARY }}>
             Let's Get Started
