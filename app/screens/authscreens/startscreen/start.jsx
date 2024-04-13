@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   loginImage: {
     width: '100%',
     height: 670,
-    marginTop: -110,
+    marginTop: -100,
     borderWidth: 0,
     borderColor: Colors.BLACK,
     borderRadius: 15
