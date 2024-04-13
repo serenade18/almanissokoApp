@@ -3,7 +3,7 @@ import { Text, View, ImageBackground, StyleSheet, TouchableOpacity, Linking, Tex
 import LoginImage from '../../../../assets/images/login/login-bg.jpg';
 import Colors from '../../../utils/Colors';
 import { Feather } from '@expo/vector-icons';
-import axios from 'axios';
+import Toast from 'react-native-toast-message';
 import { login } from '../../../services/api';
 
 export default function Login() {
@@ -54,6 +54,8 @@ export default function Login() {
       // Reset email and password fields
       setEmail('');
       setPassword('');
+
+      showSuccessAlert()
   
       // Set button text back to "Login"
       setIsLoggingIn(false);
@@ -63,12 +65,12 @@ export default function Login() {
   
       // Navigate to the next screen or perform other actions as needed
     } catch (error) {
-      // Handle login error
-      console.error('Login failed:', error.message);
   
       // Set button text back to "Login"
       setIsLoggingIn(false);
-    }
+
+      showErrorAlert('Password or email address is incorrect');
+    }    
   
     // Simulate login delay
     setTimeout(() => {
@@ -80,8 +82,25 @@ export default function Login() {
       setIsLoggingIn(false);
     }, 2000); // Simulating a 2-second login process
   };
-  
 
+  const showSuccessAlert = () => {
+    Toast.show({
+      type: 'success',
+      text1: 'Success',
+      text2: 'Login successful',
+      visibilityTime: 8000,  // 4000ms = 4s
+    });
+  }; 
+
+  const showErrorAlert = (errorMessage) => {
+    Toast.show({
+      type: 'error',
+      text1: 'Error',
+      text2: errorMessage,
+      visibilityTime: 8000, // 4000ms = 4s
+    });
+  };
+  
   return (
     <ImageBackground
       source={LoginImage}
