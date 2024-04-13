@@ -3,6 +3,7 @@ import { Text, View, ImageBackground, StyleSheet, TouchableOpacity, Linking, Tex
 import LoginImage from '../../../../assets/images/login/login-bg.jpg';
 import Colors from '../../../utils/Colors';
 import { Feather } from '@expo/vector-icons';
+import axios from 'axios';
 
 export default function Login() {
    // State variables for email, password, and error messages
@@ -22,36 +23,67 @@ export default function Login() {
   };
 
   // Function to handle form submission
-  const handleLogin = () => {
+  const handleLogin = async () => {
     // Reset error messages
     setEmailError('');
     setPasswordError('');
-
+  
     // Validate email
     if (!email) {
       setEmailError('Email is required');
       return;
     }
-
+  
     // Validate password
     if (!password) {
       setPasswordError('Password is required');
       return;
     }
-
+  
+    // Log the payload being sent
+    console.log('Payload:', { email, password });
+  
     // Set button text to "Logging In..."
     setIsLoggingIn(true);
+  
+    try {
+      // Make HTTP POST request to login endpoint
+      const response = await axios.post('https://api.jafurealestate.com/auth/jwt/create/', {
+        email: email,
+        password: password
+      });
 
+  
+      // Reset email and password fields
+      setEmail('');
+      setPassword('');
+  
+      // Set button text back to "Login"
+      setIsLoggingIn(false);
+  
+      // Handle successful login response
+      console.log('Login successful:', response.data);
+  
+      // Navigate to the next screen or perform other actions as needed
+    } catch (error) {
+      // Handle login error
+      console.error('Login failed:', error.message);
+  
+      // Set button text back to "Login"
+      setIsLoggingIn(false);
+    }
+  
     // Simulate login delay
     setTimeout(() => {
       // Your login logic goes here
       console.log('Email:', email);
       console.log('Password:', password);
-
+  
       // Set button text back to "Login"
       setIsLoggingIn(false);
     }, 2000); // Simulating a 2-second login process
   };
+  
 
   return (
     <ImageBackground
