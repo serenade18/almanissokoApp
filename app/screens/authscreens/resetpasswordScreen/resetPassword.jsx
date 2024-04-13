@@ -1,46 +1,50 @@
 import React, { useState } from 'react';
-import { Text, View, ImageBackground, StyleSheet, TouchableOpacity, Linking, TextInput } from 'react-native';
+import { Text, Alert, View, ImageBackground, StyleSheet, TouchableOpacity, Linking, TextInput } from 'react-native';
 import LoginImage from '../../../../assets/images/login/login-bg.jpg';
 import Colors from '../../../utils/Colors';
+import { resetPassword } from '../../../services/api'; // Import the resetPassword function
+import Toast from 'react-native-toast-message';
 
 export default function ResetPassword() {
-  // State variables for email, password, and error messages
+  // State variables for email and error message
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
 
   // Get current year
   const currentYear = new Date().getFullYear();
 
   // Function to handle onPress event for the Tarase Technologies link
   const handleTaraseTechnologiesLink = () => {
-    // Replace 'https://tarasetechnologies.com' with the actual URL
     Linking.openURL('https://tarase.com');
   };
 
   // Function to handle form submission
-  const handleLogin = () => {
-    // Reset error messages
+  const handleResetPassword = async () => {
     setEmailError('');
-    setPasswordError('');
 
-    // Validate email
     if (!email) {
       setEmailError('Email is required');
       return;
     }
 
-    // Validate password
-    if (!password) {
-      setPasswordError('Password is required');
-      return;
+    try {
+      const response = await resetPassword(email);
+      console.log('Reset password successful:', response);
+      setEmail('');
+      showSuccessAlert(); // Show success alert
+    } catch (error) {
+      console.error('Reset password failed:', error.message);
     }
-
-    // Your login logic goes here
-    console.log('Email:', email);
-    console.log('Password:', password);
   };
+
+  const showSuccessAlert = () => {
+    Toast.show({
+      type: 'success',
+      text1: 'Success',
+      text2: 'Check your email for a password reset link',
+      visibilityTime: 8000,  // 4000ms = 4s
+    });
+  };  
 
   return (
     <ImageBackground
@@ -63,7 +67,7 @@ export default function ResetPassword() {
           {emailError ? <Text style={styles.error}>{emailError}</Text> : null}
           <TouchableOpacity
             style={styles.button}
-            onPress={handleLogin}
+            onPress={handleResetPassword} // Call handleResetPassword function when button is pressed
           >
             <Text style={{ fontSize: 18, textAlign: 'center', color: Colors.WHITE }}>
               Submit
@@ -72,7 +76,7 @@ export default function ResetPassword() {
         </View>
         <View style={styles.footer}>
           <Text style={{ fontSize: 14, textAlign: 'center', color: Colors.WHITE, marginBottom: 5 }}>
-            © copywright, Almanissoko {currentYear}
+            © copyright, Almanissoko {currentYear}
           </Text>
           <TouchableOpacity onPress={handleTaraseTechnologiesLink}>
             <Text style={{ fontSize: 10, textAlign: 'center', color: Colors.WHITE }}>
@@ -86,47 +90,46 @@ export default function ResetPassword() {
 }
 
 const styles = StyleSheet.create({
-    backgroundImage: {
-      flex: 1,
-      width: '100%',
-      height: '100%',
-    },
-    overlay: {
-      flex: 1,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    formContainer: {
-      width: '80%',
-      backgroundColor: Colors.WHITE,
-      borderRadius: 15,
-      padding: 25,
-      alignItems: 'center',
-    },
-    input: {
-      width: '100%',
-      backgroundColor: Colors.GREY,
-      borderRadius: 10,
-      paddingHorizontal: 15,
-      paddingVertical: 10,
-      marginVertical: 10,
-    },
-    button: {
-      width: '100%',
-      backgroundColor: Colors.PRIMARY,
-      borderRadius: 10,
-      padding: 15,
-      marginTop: 20,
-    },
-    footer: {
-      position: 'absolute',
-      bottom: 20,
-    },
-    error: {
-      color: 'red',
-      marginBottom: 10,
-      textAlign: 'center',
-    },
-  });
-  
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  formContainer: {
+    width: '80%',
+    backgroundColor: Colors.WHITE,
+    borderRadius: 15,
+    padding: 25,
+    alignItems: 'center',
+  },
+  input: {
+    width: '100%',
+    backgroundColor: Colors.GREY,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    marginVertical: 10,
+  },
+  button: {
+    width: '100%',
+    backgroundColor: Colors.PRIMARY,
+    borderRadius: 10,
+    padding: 15,
+    marginTop: 20,
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 20,
+  },
+  error: {
+    color: 'red',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+});

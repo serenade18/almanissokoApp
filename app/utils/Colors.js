@@ -3,6 +3,7 @@ export default {
     PRIMARY: '#344767',
     WHITE: '#FFF',
     GRAY: '#808080',
-    TRANSAPARENT: '#ffffff00',
-    GREY: '#ebebeb'
+    TRANSPARENT: '#ffffff00',
+    GREY: '#ebebeb',
+    GREEN: '#0aed7a'
 }

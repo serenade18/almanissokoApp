@@ -4,6 +4,7 @@ import LoginImage from '../../../../assets/images/login/login-bg.jpg';
 import Colors from '../../../utils/Colors';
 import { Feather } from '@expo/vector-icons';
 import axios from 'axios';
+import { login } from '../../../services/api';
 
 export default function Login() {
    // State variables for email, password, and error messages
@@ -48,11 +49,7 @@ export default function Login() {
   
     try {
       // Make HTTP POST request to login endpoint
-      const response = await axios.post('https://api.jafurealestate.com/auth/jwt/create/', {
-        email: email,
-        password: password
-      });
-
+      const response = await login(email, password);;
   
       // Reset email and password fields
       setEmail('');
@@ -62,7 +59,7 @@ export default function Login() {
       setIsLoggingIn(false);
   
       // Handle successful login response
-      console.log('Login successful:', response.data);
+      console.log('Login successful:', response);
   
       // Navigate to the next screen or perform other actions as needed
     } catch (error) {
