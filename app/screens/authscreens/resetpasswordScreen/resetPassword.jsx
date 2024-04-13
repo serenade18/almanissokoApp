@@ -4,11 +4,13 @@ import LoginImage from '../../../../assets/images/login/login-bg.jpg';
 import Colors from '../../../utils/Colors';
 import { resetPassword } from '../../../services/api'; // Import the resetPassword function
 import Toast from 'react-native-toast-message';
+import { useNavigation } from '@react-navigation/native';
 
 export default function ResetPassword() {
-  // State variables for email and error message
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const navigation = useNavigation();
 
   // Get current year
   const currentYear = new Date().getFullYear();
@@ -27,13 +29,18 @@ export default function ResetPassword() {
       return;
     }
 
+    setIsLoggingIn(true);
+
     try {
       const response = await resetPassword(email);
       console.log('Reset password successful:', response);
       setEmail('');
       showSuccessAlert(); // Show success alert
+      setIsLoggingIn(false);
+      navigation.navigate('Login'); // Navigate to the Login screen
     } catch (error) {
       console.error('Reset password failed:', error.message);
+      setIsLoggingIn(false);
     }
   };
 
@@ -70,7 +77,7 @@ export default function ResetPassword() {
             onPress={handleResetPassword} // Call handleResetPassword function when button is pressed
           >
             <Text style={{ fontSize: 18, textAlign: 'center', color: Colors.WHITE }}>
-              Submit
+                {isLoggingIn ? "Please wait..." : "Submit"}
             </Text>
           </TouchableOpacity>
         </View>
