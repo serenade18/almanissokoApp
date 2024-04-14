@@ -9,6 +9,8 @@ import Login from './app/screens/authscreens/loginscreen/login';
 import ResetPassword from './app/screens/authscreens/resetpasswordScreen/resetPassword';
 import Dashboard from './app/screens/adminscreen/dashboard';
 import Home from './app/screens/homescreen/home';
+import 'react-native-gesture-handler';
+import DrawerNavigator from './app/navigations/drawerNavigator';
 
 const Stack = createStackNavigator();
 
@@ -23,10 +25,12 @@ export default function App() {
           <Stack.Screen name="AdminScreen" component={Dashboard} options={{ headerShown: false }} />
           <Stack.Screen name="HomeScreen" component={Home} options={{ headerShown: false }} />
         </Stack.Navigator>
+        <DrawerNavigator/>
       </View>
       <StatusBar style="auto" />
-      <Toast forwardRef={(ref) => Toast.setRef(ref)} position="bottom" />
+      <Toast forwardRef={(ref) => Toast.setRef(ref)} position="top" />
     </NavigationContainer>
+    
   );
 }
 

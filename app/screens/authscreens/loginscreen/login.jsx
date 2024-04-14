@@ -72,7 +72,7 @@ export default function Login() {
     } catch (error) {
       // Set button text back to "Login"
       setIsLoggingIn(false);
-
+      showErrorAlert('The username and password do no match!')
       console.log(error)
     }    
   
@@ -98,7 +98,7 @@ export default function Login() {
   const showSuccessAlert = () => {
     Toast.show({
       type: 'success',
-      text1: 'Success',
+      text1: 'Welcome Back',
       text2: 'Login successful',
       visibilityTime: 8000,  // 4000ms = 4s
     });
