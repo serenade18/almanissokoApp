@@ -7,6 +7,7 @@ import Toast from 'react-native-toast-message';
 import Start from './app/screens/authscreens/startscreen/start';
 import Login from './app/screens/authscreens/loginscreen/login';
 import ResetPassword from './app/screens/authscreens/resetpasswordScreen/resetPassword';
+import { ErrorUtils } from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: 50,
+    paddingTop: 35,
   },
 });

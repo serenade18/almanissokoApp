@@ -65,7 +65,6 @@ export default function Login() {
   
       // Navigate to the next screen or perform other actions as needed
     } catch (error) {
-  
       // Set button text back to "Login"
       setIsLoggingIn(false);
 

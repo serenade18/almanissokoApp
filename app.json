@@ -6,9 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "expo": {
-      "jsEngine": "jsc"
-    },
+    "jsEngine": "jsc",
     "splash": {
       "image": "./assets/logo192.png",
       "resizeMode": "contain",
