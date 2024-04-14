@@ -7,7 +7,8 @@ import Toast from 'react-native-toast-message';
 import Start from './app/screens/authscreens/startscreen/start';
 import Login from './app/screens/authscreens/loginscreen/login';
 import ResetPassword from './app/screens/authscreens/resetpasswordScreen/resetPassword';
-import { ErrorUtils } from 'react-native';
+import Dashboard from './app/screens/adminscreen/dashboard';
+import Home from './app/screens/homescreen/home';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,8 @@ export default function App() {
           <Stack.Screen name="Start" component={Start} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
           <Stack.Screen name="Reset" component={ResetPassword} options={{ headerShown: false }} />
+          <Stack.Screen name="AdminScreen" component={Dashboard} options={{ headerShown: false }} />
+          <Stack.Screen name="HomeScreen" component={Home} options={{ headerShown: false }} />
         </Stack.Navigator>
       </View>
       <StatusBar style="auto" />
@@ -30,7 +33,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    paddingTop: 35,
+    backgroundColor: '#bac9a9',
+    paddingTop: 40,
   },
 });

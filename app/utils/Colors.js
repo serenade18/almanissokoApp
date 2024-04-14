@@ -1,6 +1,7 @@
 export default {
     BLACK: '#000',
     PRIMARY: '#344767',
+    SECONDARY: '#bac9a9',
     WHITE: '#FFF',
     GRAY: '#808080',
     TRANSPARENT: '#ffffff00',

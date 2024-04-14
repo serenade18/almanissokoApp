@@ -4,7 +4,8 @@ import LoginImage from '../../../../assets/images/login/login-bg.jpg';
 import Colors from '../../../utils/Colors';
 import { Feather } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
-import { login } from '../../../services/api';
+import { loadUser, login } from '../../../services/api';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Login() {
    // State variables for email, password, and error messages
@@ -14,6 +15,7 @@ export default function Login() {
    const [passwordError, setPasswordError] = useState('');
    const [showPassword, setShowPassword] = useState(false); 
    const [isLoggingIn, setIsLoggingIn] = useState(false);
+   const navigation = useNavigation();
 
   // Get current year
   const currentYear = new Date().getFullYear();
@@ -49,7 +51,8 @@ export default function Login() {
   
     try {
       // Make HTTP POST request to login endpoint
-      const response = await login(email, password);;
+      const response = await login(email, password);
+      const userDetails = await loadUser(response)
   
       // Reset email and password fields
       setEmail('');
@@ -59,16 +62,18 @@ export default function Login() {
   
       // Set button text back to "Login"
       setIsLoggingIn(false);
+      navigateToScreen(userDetails.user_type);  
   
       // Handle successful login response
       console.log('Login successful:', response);
+      console.log('user info', userDetails)
   
       // Navigate to the next screen or perform other actions as needed
     } catch (error) {
       // Set button text back to "Login"
       setIsLoggingIn(false);
 
-      showErrorAlert('Password or email address is incorrect');
+      console.log(error)
     }    
   
     // Simulate login delay
@@ -80,6 +85,14 @@ export default function Login() {
       // Set button text back to "Login"
       setIsLoggingIn(false);
     }, 2000); // Simulating a 2-second login process
+  };
+
+  const navigateToScreen = (userType) => {
+    if (userType === 'admin') {
+      navigation.navigate('AdminScreen');
+    } else if (userType === 'normal') {
+      navigation.navigate('HomeScreen');
+    }
   };
 
   const showSuccessAlert = () => {
