@@ -12,29 +12,10 @@ import Logo from '../../assets/images/logo/logo.png'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import InvoicesScreen from '../screens/homescreen/invoicescreen/invoicesScreen';
 import DeliveryNoteScreen from '../screens/homescreen/deliveryscreen/deliveryNoteScreen';
+import OrdersScreen from '../screens/homescreen/ordersScreen/ordersScreen'
+import { MaterialIcons, Entypo, FontAwesome, FontAwesome5, FontAwesome6, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 
 const Drawer = createDrawerNavigator();
-
-// Custom Drawer Content
-// function CustomDrawerContent(props) {
-//   return (
-//     <DrawerContentScrollView {...props} style={styles.drawerContent}>
-//       <SafeAreaView style={styles.drawerHeader}>
-//         <Image
-//           source={Logo} // Replace '../assets/logo.png' with the path to your logo image
-//           style={styles.logo}
-//           resizeMode="contain"
-//         />
-//       </SafeAreaView>
-//       <DrawerItemList {...props} />
-//       <DrawerItem
-//         label="Log out"
-//         onPress={() => alert('Loging out will require you to sign back in. Are you sure')}
-//         labelStyle={styles.drawerItemLabel}
-//       />
-//     </DrawerContentScrollView>
-//   );
-// }
 
 function CustomDrawerContent(props) {
   const { user, setUser } = useAuth(); // Assuming useAuth also provides a setUser method
@@ -77,6 +58,9 @@ function CustomDrawerContent(props) {
         label="Log out"
         onPress={handleLogout}
         labelStyle={styles.drawerItemLabel}
+        icon={({ color, size }) => (
+          <Feather name="log-out" size={size} color="white" />
+        )}
       />
     </DrawerContentScrollView>
   );
@@ -102,14 +86,79 @@ export default function DrawerNavigator() {
       }}
     >
     {user && user.user_type === 'admin' && (
-      <Drawer.Screen name="Dashboard" component={Dashboard} />
+      <Drawer.Screen 
+        name="Dashboard" 
+        component={Dashboard} 
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <MaterialIcons name="space-dashboard" size={size} color={color} />
+          ),
+        }}
+      />
     )}
-      <Drawer.Screen name="New Orders" component={Home} />
-      <Drawer.Screen name="Customers" component={CustomersScreen} />
-      <Drawer.Screen name="Payments" component={PaymentsScreen} />
-      <Drawer.Screen name="Farmers" component={FarmersScreen} />
-      <Drawer.Screen name="Invoice" component={InvoicesScreen} />
-      <Drawer.Screen name="Delivery Note" component={DeliveryNoteScreen} />
+      <Drawer.Screen 
+        name="New Orders" 
+        component={Home} 
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <FontAwesome name="cart-plus" size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen 
+        name="Orders" 
+        component={OrdersScreen} 
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <FontAwesome5 name="opencart" size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen 
+        name="Customers" 
+        component={CustomersScreen} 
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <Entypo name="users" size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen 
+        name="Payments" 
+        component={PaymentsScreen} 
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="hand-coin" size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen 
+        name="Farmers" 
+        component={FarmersScreen} 
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <FontAwesome6 name="tractor" size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen 
+        name="Invoice" 
+        component={InvoicesScreen} 
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <FontAwesome5 name="file-invoice" size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen 
+        name="Delivery Note" 
+        component={DeliveryNoteScreen} 
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <MaterialIcons name="delivery-dining" size={size} color={color} />
+          ),
+        }}
+      />
     </Drawer.Navigator>
   );
 }
@@ -117,6 +166,7 @@ export default function DrawerNavigator() {
 const styles = StyleSheet.create({
   drawerContent: {
     flex: 1,
+    marginLeft: 10
   },
   drawerHeader: {
     height: 100,

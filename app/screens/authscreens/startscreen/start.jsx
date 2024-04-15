@@ -1,12 +1,10 @@
-
-
-
 import React, { useRef, useEffect } from 'react';
 import { Text, View, Image, StyleSheet, TouchableOpacity, Linking, Animated } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
 import LoginImage from '../../../../assets/images/login/login-bg.jpg';
 import Colors from '../../../utils/Colors';
 import { Feather } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 export default function Start() {
   const navigation = useNavigation(); // Get navigation object using useNavigation hook
@@ -70,7 +68,7 @@ export default function Start() {
           onPress={handleGetStarted} // Call handleGetStarted function when button is pressed
         >
           <Text style={{ fontSize: 18, textAlign: 'center', color: Colors.PRIMARY }}>
-            Continue to Login  <Feather name="arrow-right" size={14} color={Colors.PRIMARY} style={{ marginLeft: 10 }} />
+            Continue to Login  <AntDesign name="rightcircle" size={16} color="#344767" />
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -78,7 +76,7 @@ export default function Start() {
           onPress={handleResetPassword} // Call handleGetStarted function when button is pressed
         >
           <Text style={{ fontSize: 18, textAlign: 'center', color: Colors.WHITE }}>
-            Reset Password ?
+            Reset Password <AntDesign name="questioncircle" size={15} color="white" />
           </Text>
         </TouchableOpacity>
         <Text style={{ fontSize: 14, textAlign: 'center', color: Colors.GRAY, marginTop: 15 }}>
