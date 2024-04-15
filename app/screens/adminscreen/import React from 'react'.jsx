@@ -1,18 +1,13 @@
-
-
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Toast from 'react-native-toast-message';
-import Start from './app/screens/authscreens/startscreen/start';
-import Login from './app/screens/authscreens/loginscreen/login';
-import ResetPassword from './app/screens/authscreens/resetpasswordScreen/resetPassword';
-import 'react-native-gesture-handler';
-import { AuthProvider, useAuth } from './app/services/authProvider'; // Make sure this import path is correct
-import DrawerNavigator from './app/navigations/drawerNavigator'; 
-
+import Start from './screens/authscreens/startscreen/start';
+import Login from './screens/authscreens/loginscreen/login';
+import ResetPassword from './screens/authscreens/resetpasswordScreen/resetPassword';
+import { AuthProvider, useAuth } from './services/authProvider';
+import DrawerNavigator from './navigation/DrawerNavigator'; // Ensure this is the correct path
 
 const Stack = createStackNavigator();
 
@@ -21,16 +16,16 @@ function AppContent() {
 
   return (
     <View style={styles.container}>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator>
         {user ? (
-          <>
-            <Stack.Screen name="Drawer" component={DrawerNavigator} />
-          </>
+          // Drawer Navigator for all authenticated users
+          <Stack.Screen name="Drawer" component={DrawerNavigator} options={{ headerShown: false }} />
         ) : (
+          // Public screens for authentication
           <>
-            <Stack.Screen name="Start" component={Start} />
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Reset" component={ResetPassword} />
+            <Stack.Screen name="Start" component={Start} options={{ headerShown: false }} />
+            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+            <Stack.Screen name="Reset" component={ResetPassword} options={{ headerShown: false }} />
           </>
         )}
       </Stack.Navigator>
@@ -40,10 +35,9 @@ function AppContent() {
 
 export default function App() {
   return (
-    <AuthProvider> 
+    <AuthProvider>
       <NavigationContainer>
         <AppContent />
-        <StatusBar style="auto" />
         <Toast forwardRef={(ref) => Toast.setRef(ref)} position="top" />
       </NavigationContainer>
     </AuthProvider>
