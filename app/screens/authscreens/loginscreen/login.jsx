@@ -91,7 +91,7 @@ export default function Login() {
     if (userType === 'admin') {
       navigation.navigate('AdminScreen');
     } else if (userType === 'normal') {
-      navigation.navigate('HomeScreen');
+      navigation.navigate('New Orders');
     }
   };
 

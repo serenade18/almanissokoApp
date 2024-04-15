@@ -1,6 +1,6 @@
 import React from 'react';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
-import { Image, View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { Image, Alert, View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import Home from '../screens/homescreen/home';
 import CustomersScreen from '../screens/customerscreen/customersScreen';
 import PaymentsScreen from '../screens/paymentscreen/paymentScreen';
@@ -9,16 +9,63 @@ import Dashboard from '../screens/adminscreen/dashboard';
 import { useAuth } from '../services/authProvider';
 import Colors from '../utils/Colors';
 import Logo from '../../assets/images/logo/logo.png'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Drawer = createDrawerNavigator();
 
 // Custom Drawer Content
+// function CustomDrawerContent(props) {
+//   return (
+//     <DrawerContentScrollView {...props} style={styles.drawerContent}>
+//       <SafeAreaView style={styles.drawerHeader}>
+//         <Image
+//           source={Logo} // Replace '../assets/logo.png' with the path to your logo image
+//           style={styles.logo}
+//           resizeMode="contain"
+//         />
+//       </SafeAreaView>
+//       <DrawerItemList {...props} />
+//       <DrawerItem
+//         label="Log out"
+//         onPress={() => alert('Loging out will require you to sign back in. Are you sure')}
+//         labelStyle={styles.drawerItemLabel}
+//       />
+//     </DrawerContentScrollView>
+//   );
+// }
+
 function CustomDrawerContent(props) {
+  const { user, setUser } = useAuth(); // Assuming useAuth also provides a setUser method
+  const navigation = props.navigation; // Get navigation from props
+
+  const handleLogout = () => {
+    Alert.alert(
+      "Confirm Logout",
+      "Logging out will require you to sign back in. Are you sure?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => {
+            // Assuming you have a method to remove the token
+            AsyncStorage.removeItem('token').then(() => {
+              setUser(null); // Update the auth context to reflect logged out state
+              navigation.navigate('Start'); // Redirect to Start screen
+            });
+          } 
+        }
+      ],
+      { cancelable: false }
+    );
+  };
+
   return (
     <DrawerContentScrollView {...props} style={styles.drawerContent}>
       <SafeAreaView style={styles.drawerHeader}>
         <Image
-          source={Logo} // Replace '../assets/logo.png' with the path to your logo image
+          source={Logo}
           style={styles.logo}
           resizeMode="contain"
         />
@@ -26,12 +73,13 @@ function CustomDrawerContent(props) {
       <DrawerItemList {...props} />
       <DrawerItem
         label="Log out"
-        onPress={() => alert('Loging out will require you to sign back in. Are you sure')}
+        onPress={handleLogout}
         labelStyle={styles.drawerItemLabel}
       />
     </DrawerContentScrollView>
   );
 }
+
 
 export default function DrawerNavigator() {
   const { user } = useAuth();
