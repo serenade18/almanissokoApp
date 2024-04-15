@@ -10,6 +10,8 @@ import { useAuth } from '../services/authProvider';
 import Colors from '../utils/Colors';
 import Logo from '../../assets/images/logo/logo.png'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import InvoicesScreen from '../screens/homescreen/invoicescreen/invoicesScreen';
+import DeliveryNoteScreen from '../screens/homescreen/deliveryscreen/deliveryNoteScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -106,6 +108,8 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="Customers" component={CustomersScreen} />
       <Drawer.Screen name="Payments" component={PaymentsScreen} />
       <Drawer.Screen name="Farmers" component={FarmersScreen} />
+      <Drawer.Screen name="Invoice" component={InvoicesScreen} />
+      <Drawer.Screen name="Delivery Note" component={DeliveryNoteScreen} />
     </Drawer.Navigator>
   );
 }

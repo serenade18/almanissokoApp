@@ -6,6 +6,7 @@ import { Feather } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 import { loadUser, login } from '../../../services/api';
 import { useNavigation } from '@react-navigation/native';
+import { CommonActions } from '@react-navigation/native';
 
 export default function Login() {
    // State variables for email, password, and error messages
@@ -88,12 +89,18 @@ export default function Login() {
   };
 
   const navigateToScreen = (userType) => {
-    if (userType === 'admin') {
-      navigation.navigate('AdminScreen');
-    } else if (userType === 'normal') {
-      navigation.navigate('New Orders');
-    }
+    const targetScreen = userType === 'admin' ? 'Dashboard' : 'New Orders';
+  
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          { name: targetScreen },
+        ],
+      })
+    );
   };
+  
 
   const showSuccessAlert = () => {
     Toast.show({
