@@ -5,8 +5,7 @@ import Colors from '../../../utils/Colors';
 import { Feather } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 import { loadUser, login } from '../../../services/api';
-import { useNavigation } from '@react-navigation/native';
-import { CommonActions } from '@react-navigation/native';
+import { useAuth } from '../../../services/authProvider';
 
 export default function Login() {
    // State variables for email, password, and error messages
@@ -16,7 +15,7 @@ export default function Login() {
    const [passwordError, setPasswordError] = useState('');
    const [showPassword, setShowPassword] = useState(false); 
    const [isLoggingIn, setIsLoggingIn] = useState(false);
-   const navigation = useNavigation();
+   const { setUser } = useAuth();
 
   // Get current year
   const currentYear = new Date().getFullYear();
@@ -28,86 +27,36 @@ export default function Login() {
 
   // Function to handle form submission
   const handleLogin = async () => {
-    // Reset error messages
     setEmailError('');
     setPasswordError('');
-  
-    // Validate email
     if (!email) {
-      setEmailError('Email is required');
-      return;
+        setEmailError('Email is required');
+        return;
     }
-  
-    // Validate password
     if (!password) {
-      setPasswordError('Password is required');
-      return;
+        setPasswordError('Password is required');
+        return;
     }
-  
-    // Log the payload being sent
-    console.log('Payload:', { email, password });
-  
-    // Set button text to "Logging In..."
     setIsLoggingIn(true);
-  
     try {
-      // Make HTTP POST request to login endpoint
-      const response = await login(email, password);
-      const userDetails = await loadUser(response)
-  
-      // Reset email and password fields
-      setEmail('');
-      setPassword('');
-
-      showSuccessAlert()
-  
-      // Set button text back to "Login"
-      setIsLoggingIn(false);
-      navigateToScreen(userDetails.user_type);  
-  
-      // Handle successful login response
-      console.log('Login successful:', response);
-      console.log('user info', userDetails)
-  
-      // Navigate to the next screen or perform other actions as needed
+        const response = await login(email, password);
+        const userDetails = await loadUser(response);
+        setUser(userDetails);  // Update user state on successful login
+        setIsLoggingIn(false);
+        showSuccessAlert();
     } catch (error) {
-      // Set button text back to "Login"
-      setIsLoggingIn(false);
-      showErrorAlert('The username and password do no match!')
-      console.log(error)
-    }    
+        setIsLoggingIn(false);
+        showErrorAlert('The username and password do not match!');
+        console.error(error);
+    }
+};
   
-    // Simulate login delay
-    setTimeout(() => {
-      // Your login logic goes here
-      console.log('Email:', email);
-      console.log('Password:', password);
-  
-      // Set button text back to "Login"
-      setIsLoggingIn(false);
-    }, 2000); // Simulating a 2-second login process
-  };
-
-  const navigateToScreen = (userType) => {
-    const targetScreen = userType === 'admin' ? 'Dashboard' : 'New Orders';
-  
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [
-          { name: targetScreen },
-        ],
-      })
-    );
-  };
-  
-
   const showSuccessAlert = () => {
     Toast.show({
       type: 'success',
       text1: 'Welcome Back',
       text2: 'Login successful',
-      visibilityTime: 8000,  // 4000ms = 4s
+      visibilityTime: 2000,  // 4000ms = 4s
     });
   }; 
 

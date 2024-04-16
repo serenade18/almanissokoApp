@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ActivityIndicator, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Toast from 'react-native-toast-message';
@@ -15,26 +14,30 @@ import DrawerNavigator from './app/navigations/drawerNavigator';
 
 const Stack = createStackNavigator();
 
-function AppContent() {
-  const { user } = useAuth(); // Use the useAuth hook inside a component wrapped by AuthProvider
-
+function AuthStack() {
   return (
-    <View style={styles.container}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {user ? (
-          <>
-            <Stack.Screen name="Drawer" component={DrawerNavigator} />
-          </>
-        ) : (
-          <>
-            <Stack.Screen name="Start" component={Start} />
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Reset" component={ResetPassword} />
-          </>
-        )}
+          <Stack.Screen name="Start" component={Start} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Reset" component={ResetPassword} />
       </Stack.Navigator>
-    </View>
   );
+}
+
+function AppContent() {
+  const { user, loading  } = useAuth(); // Use the useAuth hook inside a component wrapped by AuthProvider
+
+  if (loading) {
+    return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <ActivityIndicator size="large" />
+            <Text>Loading...</Text>
+        </View>
+    );
+  }
+
+  return user ? <DrawerNavigator /> : <AuthStack />;
+
 }
 
 export default function App() {

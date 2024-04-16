@@ -13,13 +13,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import InvoicesScreen from '../screens/homescreen/invoicescreen/invoicesScreen';
 import DeliveryNoteScreen from '../screens/homescreen/deliveryscreen/deliveryNoteScreen';
 import OrdersScreen from '../screens/homescreen/ordersScreen/ordersScreen'
-import { MaterialIcons, Entypo, FontAwesome, FontAwesome5, FontAwesome6, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons, Entypo, FontAwesome, FontAwesome5, FontAwesome6, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 
 const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent(props) {
-  const { user, setUser } = useAuth(); // Assuming useAuth also provides a setUser method
-  const navigation = props.navigation; // Get navigation from props
+  const { setUser } = useAuth();
+  const navigation = props.navigation;
 
   const handleLogout = () => {
     Alert.alert(
@@ -32,10 +32,8 @@ function CustomDrawerContent(props) {
           style: "cancel"
         },
         { text: "OK", onPress: () => {
-            // Assuming you have a method to remove the token
             AsyncStorage.removeItem('token').then(() => {
-              setUser(null); // Update the auth context to reflect logged out state
-              navigation.navigate('Start'); // Redirect to Start screen
+              setUser(null);
             });
           } 
         }
@@ -54,14 +52,23 @@ function CustomDrawerContent(props) {
         />
       </SafeAreaView>
       <DrawerItemList {...props} />
-      <DrawerItem
-        label="Log out"
-        onPress={handleLogout}
-        labelStyle={styles.drawerItemLabel}
-        icon={({ color, size }) => (
-          <Feather name="log-out" size={size} color="white" />
-        )}
-      />
+      <View style={styles.bottomDrawerSection}>
+        <DrawerItem
+          label="Log out"
+          onPress={handleLogout}
+          icon={({ color, size }) => (
+            <FontAwesome name="sign-out" size={size} color='white' />
+          )}
+          labelStyle={styles.drawerItemLabel}
+        /> 
+        <DrawerItem
+          label="Settings"
+          icon={({ color, size }) => (
+            <Ionicons name="settings-outline" size={size} color='white' />
+          )}
+          labelStyle={styles.drawerItemLabel}
+        />
+      </View>
     </DrawerContentScrollView>
   );
 }
@@ -123,6 +130,7 @@ export default function DrawerNavigator() {
           ),
         }}
       />
+    {user && user.user_type === 'admin' && (
       <Drawer.Screen 
         name="Payments" 
         component={PaymentsScreen} 
@@ -132,6 +140,7 @@ export default function DrawerNavigator() {
           ),
         }}
       />
+    )}
       <Drawer.Screen 
         name="Farmers" 
         component={FarmersScreen} 
@@ -185,5 +194,11 @@ const styles = StyleSheet.create({
   drawerItemLabel: {
     fontSize: 16,
     color: Colors.GREY
+  },
+  bottomDrawerSection: {
+    marginBottom: 10,
+    marginTop: 270,
+    borderTopColor: Colors.GRAY,
+    borderTopWidth: 1,
   },
 });
