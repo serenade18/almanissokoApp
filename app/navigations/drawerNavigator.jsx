@@ -19,7 +19,10 @@ const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent(props) {
   const { setUser } = useAuth();
-  const navigation = props.navigation;
+  const { user } = useAuth();
+
+   // Conditionally set marginTop based on user type
+   const bottomDrawerMarginTop = user && user.user_type === 'admin' ? 270 : 370;
 
   const handleLogout = () => {
     Alert.alert(
@@ -52,7 +55,7 @@ function CustomDrawerContent(props) {
         />
       </SafeAreaView>
       <DrawerItemList {...props} />
-      <View style={styles.bottomDrawerSection}>
+      <View style={[styles.bottomDrawerSection, { marginTop: bottomDrawerMarginTop }]}>
         <DrawerItem
           label="Log out"
           onPress={handleLogout}
@@ -197,7 +200,6 @@ const styles = StyleSheet.create({
   },
   bottomDrawerSection: {
     marginBottom: 10,
-    marginTop: 270,
     borderTopColor: Colors.GRAY,
     borderTopWidth: 1,
   },
