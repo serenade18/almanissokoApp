@@ -4,10 +4,14 @@ import Header from '../../components/header';
 import { useAuth } from '../../services/authProvider';
 import Colors from '../../utils/Colors';
 import { Entypo } from '@expo/vector-icons';
+import { Picker } from '@react-native-picker/picker';
 
 export default function Home() {
   const { user } = useAuth();
   const [formData, setFormData] = useState({});
+
+  const [vat, setVat] = useState("");
+  const [rice, setRice] = useState("");
 
   // Handle input changes
   const handleChange = (name, value) => {
@@ -97,94 +101,101 @@ export default function Home() {
             />
           </View>
           <View style={styles.inputRow}>
-          <TextInput
-            style={styles.input}
-            placeholder="Discount"
-            placeholderTextColor={Colors.BLACK}
-            // value={email}
-            // onChangeText={setEmail}
-            required
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Transport"
-            placeholderTextColor={Colors.BLACK}
-            // value={email}
-            // onChangeText={setEmail}
-            required
-          />
+            <TextInput
+              style={styles.input}
+              placeholder="Discount"
+              placeholderTextColor={Colors.BLACK}
+              // value={email}
+              // onChangeText={setEmail}
+              required
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Transport"
+              placeholderTextColor={Colors.BLACK}
+              // value={email}
+              // onChangeText={setEmail}
+              required
+            />
           </View>
           <View style={styles.inputRow}>
-          <TextInput
-            style={styles.input}
-            placeholder="Transporters"
-            placeholderTextColor={Colors.BLACK}
-            // value={email}
-            // onChangeText={setEmail}
-            required
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Rider"
-            placeholderTextColor={Colors.BLACK}
-            // value={email}
-            // onChangeText={setEmail}
-            required
-          />
+            <TextInput
+              style={styles.input}
+              placeholder="Transporters"
+              placeholderTextColor={Colors.BLACK}
+              // value={email}
+              // onChangeText={setEmail}
+              required
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Rider"
+              placeholderTextColor={Colors.BLACK}
+              // value={email}
+              // onChangeText={setEmail}
+              required
+            />
           </View>
           <View style={styles.inputRow}>
-          <TextInput
-            style={styles.input}
-            placeholder="Comment"
-            placeholderTextColor={Colors.BLACK}
-            // value={email}
-            // onChangeText={setEmail}
-            required
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Farmer"
-            placeholderTextColor={Colors.BLACK}
-            // value={email}
-            // onChangeText={setEmail}
-            required
-          />
+            <TextInput
+              style={styles.input}
+              placeholder="Comment"
+              placeholderTextColor={Colors.BLACK}
+              // value={email}
+              // onChangeText={setEmail}
+              required
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Farmer"
+              placeholderTextColor={Colors.BLACK}
+              // value={email}
+              // onChangeText={setEmail}
+              required
+            />
           </View>
           <View style={styles.inputRow}>
-          <TextInput
-            style={styles.input}
-            placeholder="Rice Type"
-            placeholderTextColor={Colors.BLACK}
-            // value={email}
-            // onChangeText={setEmail}
-            required
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="V.A.T"
-            placeholderTextColor={Colors.BLACK}
-            // value={email}
-            // onChangeText={setEmail}
-            required
-          />
+            <View style={styles.input}>
+              <Picker
+                selectedValue={rice}
+                onValueChange={(itemValue, itemIndex) => setRice(itemValue)}
+                style={{ flex: 1, color: Colors.BLACK }}
+              >
+                <Picker.Item label="Rice Type" value="" />
+                <Picker.Item label="Pishori" value="1" />
+                <Picker.Item label="Komboka" value="2" />
+              </Picker>
+            </View>
+            <View style={styles.input}>
+              <Picker
+                selectedValue={vat}
+                onValueChange={(itemValue, itemIndex) => setVat(itemValue)}
+                style={{ flex: 1, color: Colors.BLACK }}
+              >
+                <Picker.Item label="V.A.T" value="" />
+                <Picker.Item label="0%" value="0" />
+                <Picker.Item label="14%" value="14" />
+                <Picker.Item label="16%" value="16" />
+              </Picker>
+            </View>
           </View>
           <View style={styles.inputRow}>
-          <TextInput
-            style={styles.input}
-            placeholder="Farmer Price"
-            placeholderTextColor={Colors.BLACK}
-            // value={email}
-            // onChangeText={setEmail}
-            required
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Almanis Price"
-            placeholderTextColor={Colors.BLACK}
-            // value={email}
-            // onChangeText={setEmail}
-            required
-          />
+            <TextInput
+              style={styles.input}
+              placeholder="Farmer Price"
+              placeholderTextColor={Colors.BLACK}
+              // value={email}
+              // onChangeText={setEmail}
+              required
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Almanis Price"
+              placeholderTextColor={Colors.BLACK}
+              // value={email}
+              // onChangeText={setEmail}
+              required
+            />
           </View>
           <TextInput
             style={styles.amountInput}

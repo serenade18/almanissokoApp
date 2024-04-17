@@ -12,3 +12,10 @@ export default function FarmersScreen() {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+  },
+});
