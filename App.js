@@ -48,7 +48,7 @@ export default function App() {
           <AppContent />
         </View>
         <StatusBar style="auto" />
-        <Toast forwardRef={(ref) => Toast.setRef(ref)} position="right" />
+        <Toast forwardRef={(ref) => Toast.setRef(ref)} position="bottom" />
       </NavigationContainer>
     </AuthProvider>
   );

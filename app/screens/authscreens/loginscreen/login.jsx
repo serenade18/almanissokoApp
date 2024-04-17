@@ -86,6 +86,7 @@ export default function Login() {
             placeholderTextColor={Colors.GRAY}
             value={email}
             onChangeText={setEmail}
+            required
           />
           {emailError ? <Text style={styles.error}>{emailError}</Text> : null}
           <View style={styles.passwordContainer}>
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     formContainer: {
-      width: '80%',
+      width: '85%',
       backgroundColor: Colors.WHITE,
       borderRadius: 15,
       padding: 25,

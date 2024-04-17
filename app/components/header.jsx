@@ -3,12 +3,13 @@ import { View, Text, TouchableOpacity, StyleSheet, Image, Dimensions } from 'rea
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import ProfilePic from '../../assets/images/icons/user2.png';
+import Hamburger from '../../assets/images/icons/hamburger1.png';
 import Colors from '../utils/Colors';
 
 // Get the screen's height
 const screenHeight = Dimensions.get('window').height;
 
-export default function Header({ pageTitle, firstName }) {
+export default function Header({ pageTitle, lastName }) {
   const navigation = useNavigation();
 
   // Determine the greeting based on the time of day
@@ -23,17 +24,15 @@ export default function Header({ pageTitle, firstName }) {
     <View style={styles.headerContainer}>
       <View style={styles.leftContainer}>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          <AntDesign name="menu-fold" size={24} color="black" />
+        <Image source={Hamburger} style={styles.profileIcon} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Text style={styles.pageTitle}>{pageTitle}</Text>
-        </TouchableOpacity>
       </View>
       <TouchableOpacity style={styles.rightContainer} onPress={() => console.log('Profile pressed')}>
         <View style={styles.profileContainer}>
           <View style={styles.textContainer}>
             <Text style={styles.greeting}>{getGreeting()},</Text>
-            <Text style={styles.userName}>{`${firstName}`}</Text>
+            <Text style={styles.userName}>{`${lastName}`}</Text>
           </View>
           <Image source={ProfilePic} style={styles.profileIcon} />
         </View>
@@ -63,8 +62,10 @@ const styles = StyleSheet.create({
   },
   pageTitle: {
     marginLeft: 10,
+    marginTop: 10,
     color: Colors.PRIMARY,
-    fontSize: 18
+    fontSize: 18,
+    fontWeight: 'bold'
   },
   rightContainer: {
     flexDirection: 'row',
@@ -85,7 +86,8 @@ const styles = StyleSheet.create({
   userName: {
     textAlign: 'right',
     fontWeight: '900',
-    color: Colors.PRIMARY
+    color: Colors.PRIMARY,
+    fontSize: 18
   },
   profileIcon: {
     width: 45,
