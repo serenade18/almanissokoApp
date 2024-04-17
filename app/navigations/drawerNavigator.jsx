@@ -67,7 +67,7 @@ function CustomDrawerContent(props) {
         <DrawerItem
           label="Settings"
           icon={({ color, size }) => (
-            <Ionicons name="settings-outline" size={size} color='white' />
+            <FontAwesome5 name="users-cog" size={18} color='white' />
           )}
           labelStyle={styles.drawerItemLabel}
         />
@@ -92,7 +92,7 @@ export default function DrawerNavigator() {
         drawerInactiveTintColor: '#dddddd',
         drawerActiveBackgroundColor: Colors.SIDEBARACTIVE,
         overlayColor: 'rgba(0, 0, 0, 0.5)', // Darken the outside of the drawer
-        headerShown: true,
+        headerShown: false,
       }}
     >
     {user && user.user_type === 'admin' && (

@@ -6,6 +6,6 @@ export default {
     GRAY: '#808080',
     TRANSPARENT: '#ffffff00',
     GREY: '#ebebeb',
-    GREEN: '#0aed7a',
+    GREEN: '#d4e8f0',
     SIDEBARACTIVE: '#5f6a7c'
 }
