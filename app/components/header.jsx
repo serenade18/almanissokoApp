@@ -16,7 +16,7 @@ export default function Header({ pageTitle, lastName }) {
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour < 12) return 'Good Morning';
-    if (hour < 18) return 'Good Afternoon';
+    if (hour < 16) return 'Good Afternoon';
     return 'Good Evening';
   };
 
@@ -47,12 +47,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-start', // Align items at the top
     padding: 10,
-    backgroundColor: Colors.GREY,
+    backgroundColor: Colors.GREEN,
     height: screenHeight * 0.325, // Set height to 25% of the screen height
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
   },
   leftContainer: {
     flexDirection: 'row',

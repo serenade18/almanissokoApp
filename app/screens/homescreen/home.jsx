@@ -24,28 +24,82 @@ export default function Home() {
   };
 
   return (
-    <View>
-    <ScrollView >
-      <Header pageTitle="New Orders" firstName={user.first_name} lastName={user.last_name} />
-      <View style={styles.customer}>
-        <TouchableOpacity
-          style={styles.clearButton}
-        >
-          <Entypo name="add-user" size={38} color={Colors.PRIMARY} />
-          <Text style={styles.text}>
-             New Customer
-          </Text>
-        </TouchableOpacity>
-      </View>
+    <View style={styles.container}>
+      <ScrollView >
+        <Header pageTitle="New Orders" firstName={user.first_name} lastName={user.last_name} />
+        <View style={styles.customer}>
+          <TouchableOpacity
+            style={styles.clearButton}
+          >
+            <Entypo name="add-user" size={38} color={Colors.PRIMARY} />
+            <Text style={styles.text}>
+              New Customer
+            </Text>
+          </TouchableOpacity>
+        </View>
 
-      <View style={styles.formContainer}>
-        <Text style={{ fontSize: 27, color: Colors.BLACK, textAlign: 'start', paddingTop: 15, paddingBottom: 20 }}>
-          Place Order
-        </Text>
-        <View style={styles.inputRow}>
+        <View style={styles.formContainer}>
+          <Text style={{ fontSize: 27, color: Colors.BLACK, textAlign: 'start', paddingTop: 15, paddingBottom: 20 }}>
+            Place Order
+          </Text>
+          <View style={styles.inputRow}>
+            <TextInput
+              style={styles.input}
+              placeholder="Phone Number"
+              placeholderTextColor={Colors.BLACK}
+              // value={email}
+              // onChangeText={setEmail}
+              required
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Customer Name"
+              placeholderTextColor={Colors.BLACK}
+              // value={email}
+              // onChangeText={setEmail}
+              required
+            />
+          </View>
+          <View style={styles.inputRow}>
+            <TextInput
+              style={styles.input}
+              placeholder="Customer No"
+              placeholderTextColor={Colors.BLACK}
+              // value={email}
+              // onChangeText={setEmail}
+              required
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Town"
+              placeholderTextColor={Colors.BLACK}
+              // value={email}
+              // onChangeText={setEmail}
+              required
+            />
+          </View>
+          <View style={styles.inputRow}>
+            <TextInput
+              style={styles.input}
+              placeholder="Kilos"
+              placeholderTextColor={Colors.BLACK}
+              // value={email}
+              // onChangeText={setEmail}
+              required
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Packaging"
+              placeholderTextColor={Colors.BLACK}
+              // value={email}
+              // onChangeText={setEmail}
+              required
+            />
+          </View>
+          <View style={styles.inputRow}>
           <TextInput
             style={styles.input}
-            placeholder="Phone Number"
+            placeholder="Discount"
             placeholderTextColor={Colors.BLACK}
             // value={email}
             // onChangeText={setEmail}
@@ -53,35 +107,17 @@ export default function Home() {
           />
           <TextInput
             style={styles.input}
-            placeholder="Customer Name"
+            placeholder="Transport"
             placeholderTextColor={Colors.BLACK}
             // value={email}
             // onChangeText={setEmail}
             required
           />
-        </View>
-        <View style={styles.inputRow}>
+          </View>
+          <View style={styles.inputRow}>
           <TextInput
             style={styles.input}
-            placeholder="Customer No"
-            placeholderTextColor={Colors.BLACK}
-            // value={email}
-            // onChangeText={setEmail}
-            required
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Town"
-            placeholderTextColor={Colors.BLACK}
-            // value={email}
-            // onChangeText={setEmail}
-            required
-          />
-        </View>
-        <View style={styles.inputRow}>
-          <TextInput
-            style={styles.input}
-            placeholder="Kilos"
+            placeholder="Transporters"
             placeholderTextColor={Colors.BLACK}
             // value={email}
             // onChangeText={setEmail}
@@ -89,121 +125,89 @@ export default function Home() {
           />
           <TextInput
             style={styles.input}
-            placeholder="Packaging"
+            placeholder="Rider"
             placeholderTextColor={Colors.BLACK}
             // value={email}
             // onChangeText={setEmail}
             required
           />
+          </View>
+          <View style={styles.inputRow}>
+          <TextInput
+            style={styles.input}
+            placeholder="Comment"
+            placeholderTextColor={Colors.BLACK}
+            // value={email}
+            // onChangeText={setEmail}
+            required
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Farmer"
+            placeholderTextColor={Colors.BLACK}
+            // value={email}
+            // onChangeText={setEmail}
+            required
+          />
+          </View>
+          <View style={styles.inputRow}>
+          <TextInput
+            style={styles.input}
+            placeholder="Rice Type"
+            placeholderTextColor={Colors.BLACK}
+            // value={email}
+            // onChangeText={setEmail}
+            required
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="V.A.T"
+            placeholderTextColor={Colors.BLACK}
+            // value={email}
+            // onChangeText={setEmail}
+            required
+          />
+          </View>
+          <View style={styles.inputRow}>
+          <TextInput
+            style={styles.input}
+            placeholder="Farmer Price"
+            placeholderTextColor={Colors.BLACK}
+            // value={email}
+            // onChangeText={setEmail}
+            required
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Almanis Price"
+            placeholderTextColor={Colors.BLACK}
+            // value={email}
+            // onChangeText={setEmail}
+            required
+          />
+          </View>
+          <TextInput
+            style={styles.amountInput}
+            placeholder="Amount"
+            placeholderTextColor={Colors.BLACK}
+            // value={email}
+            // onChangeText={setEmail}
+            required
+          />
+          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+            <Text style={styles.buttonText}>Submit Order</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.inputRow}>
-        <TextInput
-          style={styles.input}
-          placeholder="Discount"
-          placeholderTextColor={Colors.BLACK}
-          // value={email}
-          // onChangeText={setEmail}
-          required
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Transport"
-          placeholderTextColor={Colors.BLACK}
-          // value={email}
-          // onChangeText={setEmail}
-          required
-        />
-        </View>
-        <View style={styles.inputRow}>
-        <TextInput
-          style={styles.input}
-          placeholder="Transporters"
-          placeholderTextColor={Colors.BLACK}
-          // value={email}
-          // onChangeText={setEmail}
-          required
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Rider"
-          placeholderTextColor={Colors.BLACK}
-          // value={email}
-          // onChangeText={setEmail}
-          required
-        />
-        </View>
-        <View style={styles.inputRow}>
-        <TextInput
-          style={styles.input}
-          placeholder="Comment"
-          placeholderTextColor={Colors.BLACK}
-          // value={email}
-          // onChangeText={setEmail}
-          required
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Farmer"
-          placeholderTextColor={Colors.BLACK}
-          // value={email}
-          // onChangeText={setEmail}
-          required
-        />
-        </View>
-        <View style={styles.inputRow}>
-        <TextInput
-          style={styles.input}
-          placeholder="Rice Type"
-          placeholderTextColor={Colors.BLACK}
-          // value={email}
-          // onChangeText={setEmail}
-          required
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="V.A.T"
-          placeholderTextColor={Colors.BLACK}
-          // value={email}
-          // onChangeText={setEmail}
-          required
-        />
-        </View>
-        <View style={styles.inputRow}>
-        <TextInput
-          style={styles.input}
-          placeholder="Farmer Price"
-          placeholderTextColor={Colors.BLACK}
-          // value={email}
-          // onChangeText={setEmail}
-          required
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Almanis Price"
-          placeholderTextColor={Colors.BLACK}
-          // value={email}
-          // onChangeText={setEmail}
-          required
-        />
-        </View>
-        <TextInput
-          style={styles.input}
-          placeholder="Amount"
-          placeholderTextColor={Colors.BLACK}
-          // value={email}
-          // onChangeText={setEmail}
-          required
-        />
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>Submit Order</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+  },
   text: {
     fontSize: 24,
     fontWeight: '600',
@@ -248,6 +252,14 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '48%',
+    backgroundColor: Colors.GREY,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    marginVertical: 10,
+  },
+  amountInput: {
+    width: '100%',
     backgroundColor: Colors.GREY,
     borderRadius: 10,
     paddingHorizontal: 15,
