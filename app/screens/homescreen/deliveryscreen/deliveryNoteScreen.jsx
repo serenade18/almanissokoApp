@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
-import Header from '../../../components/header'
+import Header from '../../../components/mainheader/header'
 import { useAuth } from '../../../services/authProvider';
 
 export default function DeliveryNoteScreen() {

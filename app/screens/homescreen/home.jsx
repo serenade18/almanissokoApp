@@ -1,16 +1,17 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import debounce from 'lodash.debounce';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, FlatList } from 'react-native';
-import Header from '../../components/header';
+import Header from '../../components/mainheader/header';
 import { useAuth } from '../../services/authProvider';
 import Colors from '../../utils/Colors';
 import { Entypo } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import { searchCustomer } from '../../services/api';
-
+import { useNavigation } from '@react-navigation/native';
 
 export default function Home() {
   const { token } = useAuth();
+  const navigation = useNavigation();
 
   const { user } = useAuth();
   const [formData, setFormData] = useState({
@@ -39,6 +40,10 @@ export default function Home() {
   const [rice, setRice] = useState("");
   const [isSearching, setIsSearching] = useState(false);
 
+  const handleNewCustomer = () => {
+    navigation.navigate('AddCustomer'); // Navigate to the login screen
+  };
+
   // Handle form submission
   const handleSubmit = () => {
     console.log('Form Data:', formData);
@@ -66,39 +71,62 @@ export default function Home() {
     return () => debouncedSearch.cancel();
   }, [searchText, debouncedSearch]);
 
-  const handleSearchCustomer = (text) => {
-    setSearchText(text); // Update the searchText state immediately with each keystroke
+  const handleSearchCustomer = async (text) => {
+    setSearchText(text);  // Update the searchText state immediately with each keystroke
     setFormData(prevState => ({
       ...prevState,
       phone: text
     }));
+  
+    if (text) {
+      setIsSearching(true);  // Start loading
+      try {
+        const results = await searchCustomer(text, token);  // Attempt to fetch customer data
+        console.log(results)
+        setCustomerResults(results || []);  // Update state with results or empty array if undefined
+      } catch (error) {
+        console.error('Failed to fetch customer data:', error);  // Log error to console
+        setCustomerResults([]);  // Optionally handle the error in the UI, e.g., show an error message
+      } finally {
+        setIsSearching(false);  // Stop loading indicator regardless of success or failure
+      }
+    } else {
+      setCustomerResults([]);  // Clear results if no text is present
+    }
   };
 
   const handleChange = (name, value) => {
+    // Convert numeric values to string if necessary before setting them in formData
+    const newValue = typeof value === 'number' ? value.toString() : value;
     setFormData(prevState => ({
       ...prevState,
-      [name]: value
+      [name]: newValue
     }));
   };
 
   const handleSelectCustomer = (customer) => {
+    console.log("Selected Customer:", customer);
+    
+    // Update the formData directly
     setFormData({
       ...formData,
       phone: customer.phone,
       customerName: customer.name,
-      customerId: customer.id,
+      customerId: customer.id.toString()
     });
+    
     setCustomerResults([]); // Clear results after selection
   };
-
+  
   return (
-    <View style={styles.container}>
+    <View  style={styles.container}>
       
       <ScrollView >
         <Header pageTitle="New Orders" firstName={user.first_name} lastName={user.last_name} />
         <View style={styles.customer}>
           <TouchableOpacity
             style={styles.clearButton}
+            onPress={handleNewCustomer}
           >
             <Entypo name="add-user" size={38} color={Colors.PRIMARY} />
             <Text style={styles.text}>

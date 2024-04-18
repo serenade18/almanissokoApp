@@ -1,5 +1,6 @@
 import React from 'react';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
+import { createStackNavigator } from '@react-navigation/stack';
 import { Image, Alert, View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import Home from '../screens/homescreen/home';
 import CustomersScreen from '../screens/customerscreen/customersScreen';
@@ -13,9 +14,50 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import InvoicesScreen from '../screens/homescreen/invoicescreen/invoicesScreen';
 import DeliveryNoteScreen from '../screens/homescreen/deliveryscreen/deliveryNoteScreen';
 import OrdersScreen from '../screens/homescreen/ordersScreen/ordersScreen'
-import { Ionicons, MaterialIcons, Entypo, FontAwesome, FontAwesome5, FontAwesome6, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
+import { MaterialIcons, Entypo, FontAwesome, FontAwesome5, FontAwesome6, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
+import AddCustomerScreen from '../screens/customerscreen/addCustomerScreen';
 
 const Drawer = createDrawerNavigator();
+const CustomerStack = createStackNavigator();
+const HomeStack = createStackNavigator();
+const FarmerStack = createStackNavigator();
+const PaymentStack = createStackNavigator();
+
+function CustomerStackNavigator() {
+  return (
+    <CustomerStack.Navigator screenOptions={{ headerShown: false }}>
+      <CustomerStack.Screen name="Customer" component={CustomersScreen} />
+      <CustomerStack.Screen name="AddCustomer" component={AddCustomerScreen} />
+    </CustomerStack.Navigator>
+  );
+}
+
+function HomeStackNavigator() {
+  return (
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="AddCustomer" component={AddCustomerScreen} />
+    </HomeStack.Navigator>
+  );
+}
+
+function FarmerStackNavigator() {
+  return (
+    <FarmerStack.Navigator screenOptions={{ headerShown: false }}>
+      <FarmerStack.Screen name="Home" component={Home} />
+      <FarmerStack.Screen name="AddCustomer" component={AddCustomerScreen} />
+    </FarmerStack.Navigator>
+  );
+}
+
+function PaymentStackNavigator() {
+  return (
+    <PaymentStack.Navigator screenOptions={{ headerShown: false }}>
+      <PaymentStack.Screen name="Home" component={Home} />
+      <PaymentStack.Screen name="AddCustomer" component={AddCustomerScreen} />
+    </PaymentStack.Navigator>
+  );
+}
 
 function CustomDrawerContent(props) {
   const { setUser } = useAuth();
@@ -76,7 +118,6 @@ function CustomDrawerContent(props) {
   );
 }
 
-
 export default function DrawerNavigator() {
   const { user } = useAuth();
 
@@ -108,7 +149,7 @@ export default function DrawerNavigator() {
     )}
       <Drawer.Screen 
         name="New Orders" 
-        component={Home} 
+        component={HomeStackNavigator}  // Use HomeStackNavigator instead of Home directly
         options={{
           drawerIcon: ({ color, size }) => (
             <FontAwesome name="cart-plus" size={size} color={color} />
@@ -126,7 +167,7 @@ export default function DrawerNavigator() {
       />
       <Drawer.Screen 
         name="Customers" 
-        component={CustomersScreen} 
+        component={CustomerStackNavigator}  // Use HomeStackNavigator instead of Home directly
         options={{
           drawerIcon: ({ color, size }) => (
             <Entypo name="users" size={size} color={color} />

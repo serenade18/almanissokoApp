@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { useAuth } from '../../services/authProvider';
-import Header from '../../components/header';
+import Header from '../../components/mainheader/header';
 
 export default function PaymentsScreen() {
   const { user } = useAuth(); 

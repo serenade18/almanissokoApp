@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View, ImageBackground, StyleSheet, TouchableOpacity, Linking, TextInput } from 'react-native';
-import Header from '../../components/header';
+import Header from '../../components/mainheader/header';
 import { useAuth } from '../../services/authProvider';
 
 export default function Dashboard() {

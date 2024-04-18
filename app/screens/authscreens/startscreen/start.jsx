@@ -3,7 +3,6 @@ import { Text, View, Image, StyleSheet, TouchableOpacity, Linking, Animated } fr
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
 import LoginImage from '../../../../assets/images/login/login-bg.jpg';
 import Colors from '../../../utils/Colors';
-import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
 export default function Start() {

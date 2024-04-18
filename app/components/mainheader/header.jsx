@@ -1,10 +1,9 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import ProfilePic from '../../assets/images/icons/user2.png';
-import Hamburger from '../../assets/images/icons/hamburger1.png';
-import Colors from '../utils/Colors';
+import ProfilePic from '../../../assets/images/icons/user2.png';
+import Hamburger from '../../../assets/images/icons/hamburger1.png';
+import Colors from '../../utils/Colors';
 
 // Get the screen's height
 const screenHeight = Dimensions.get('window').height;
