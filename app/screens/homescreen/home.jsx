@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import debounce from 'lodash.debounce';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import Header from '../../components/header';
@@ -10,6 +10,8 @@ import { searchCustomer } from '../../services/api';
 
 
 export default function Home() {
+  const { token } = useAuth();
+
   const { user } = useAuth();
   const [formData, setFormData] = useState({
     phone: '',
@@ -35,6 +37,7 @@ export default function Home() {
 
   const [vat, setVat] = useState("");
   const [rice, setRice] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
   // Handle form submission
   const handleSubmit = () => {
@@ -42,24 +45,40 @@ export default function Home() {
     // Submit logic here
   };
 
-  // Handle input changes for the form data
+   // Create a debounced function that only invokes searchCustomer after 300ms
+   const debouncedSearch = useCallback(
+    debounce(async (text) => {
+      setIsSearching(true);  // Start loading
+      const results = await searchCustomer(text, token);
+      setCustomerResults(results || []);
+      setIsSearching(false);  // Stop loading
+    }, 300),
+    [token]
+  );
+
+  useEffect(() => {
+    if (searchText) {
+      debouncedSearch(searchText);
+    } else {
+      setCustomerResults([]);
+    }
+    // Cleanup debounced calls on component unmount
+    return () => debouncedSearch.cancel();
+  }, [searchText, debouncedSearch]);
+
+  const handleSearchCustomer = (text) => {
+    setSearchText(text); // Update the searchText state immediately with each keystroke
+    setFormData(prevState => ({
+      ...prevState,
+      phone: text
+    }));
+  };
+
   const handleChange = (name, value) => {
     setFormData(prevState => ({
       ...prevState,
       [name]: value
     }));
-  };
-
-  // Debounce setup
-  const debounceSearch = useCallback(debounce(async (text) => {
-    const results = await searchCustomer(text);
-    setCustomerResults(results || []);
-  }, 300), []); // Ensure this is correctly set up
-
-  // Event handler that uses debounce
-  const handleSearchCustomer = (text) => {
-    setSearchText(text); // Update the local state immediately
-    debounceSearch(text); // Call the debounced function
   };
 
   const handleSelectCustomer = (customer) => {
@@ -102,7 +121,9 @@ export default function Home() {
               onBlur={() => setCustomerResults([])}
               required
             />
-            {customerResults.length > 0 && (
+            {isSearching ? (
+              <Text style={styles.loadingText}>Searching. Please Wait..</Text>
+            ) : customerResults.length > 0 ? (
               <View style={styles.resultsContainer}>
                 {customerResults.map(item => (
                   <TouchableOpacity key={item.id} onPress={() => handleSelectCustomer(item)} style={styles.resultItem}>
@@ -110,7 +131,7 @@ export default function Home() {
                   </TouchableOpacity>
                 ))}
               </View>
-            )}
+            ) : null}
             <TextInput
               style={styles.input}
               placeholder="Customer Name"
@@ -280,7 +301,7 @@ const styles = StyleSheet.create({
     padding: 15
   },
   customer: {
-    marginTop: -200, // Give some space from the header
+    marginTop: -200, 
     marginBottom: 20,
     paddingLeft: 20,
   },
@@ -313,7 +334,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    color: '#333', // Darker text for better readability
+    color: '#333', 
     marginBottom: 5,
   },
   input: {
@@ -333,7 +354,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   button: {
-    backgroundColor: Colors.PRIMARY, // A blue color for the button
+    backgroundColor: Colors.PRIMARY,
     padding: 15,
     borderRadius: 15,
     alignItems: 'center',
@@ -342,20 +363,34 @@ const styles = StyleSheet.create({
   resultsContainer: {
     backgroundColor: 'white',
     position: 'absolute',
-    top: 60,  // Adjust this value based on the height of the TextInput
-    width: '48%',  // Match the width of the phone input
-    left: 10,  // Match the left position of the phone input
+    top: 60,  
+    width: '48%',  
+    left: 10,  
     borderColor: 'lightgray',
     borderWidth: 1,
     borderRadius: 5,
-    zIndex: 1000,  // High z-index to ensure it overlays other content
+    zIndex: 1000,  
     maxHeight: 200,  // Set a max-height for scrolling within the container
-    overflow: 'visible',  // Hide overflow
+    overflow: 'scroll',  
   },
   resultItem: {
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: 'lightgray',
+  },
+  loadingText: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    top: 60,  
+    width: '48%',  
+    padding: 10,
+    left: 10,  
+    borderColor: 'lightgray',
+    borderWidth: 1,
+    borderRadius: 5,
+    zIndex: 1000,  
+    height: 40,  // Set a max-height for scrolling within the container
+    overflow: 'scroll', 
   },
   clearButton: {
     flexDirection: 'row',
