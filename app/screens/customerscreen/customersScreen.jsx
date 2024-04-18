@@ -12,30 +12,72 @@ export default function CustomersScreen() {
   const navigation = useNavigation();
 
   const handleNewCustomer = () => {
-    navigation.navigate('AddCustomer'); // Navigate to the login screen
+    navigation.navigate('AddCustomer');
   }
 
   const [customers, setCustomers] = useState([]);
+  // console.log('customers', customers)
 
   useEffect(() => {
-    // Fetch customers when the component mounts
     fetchCustomers();
   }, []);
 
   const fetchCustomers = async () => {
     try {
-      const customerData = await fetchAllCustomer();
-      console.log('Customers', customerData)
-      setCustomers(customerData);
+      const response = await fetchAllCustomer();
+      if (response.error === false) {  // Assuming the API sends this in response
+        console.log('Customers fetched:', response.data); // Log to check the structure
+        setCustomers(response.data); // Make sure this matches the actual path to the data array
+      } else {
+        console.error('Failed to fetch customers:', response.message);
+      }
     } catch (error) {
       console.error('Error fetching customer data:', error);
-      // Handle error (e.g., show error message to the user)
     }
-  };
+  };  
 
+  // Region ID to name mapping
+  const regionNames = {
+    1: "NAIROBI",
+    2: "NYANZA",
+    3: "CENTRAL",
+    4: "COAST",
+    5: "EASTERN",
+    6: "NORTH EASTERN",
+    7: "WESTERN",
+    8: "RIFT VALLEY"
+  };
+  
+  const renderItem = ({ item }) => {
+    // Create a new Date object from the added_on string
+  
+    return (
+      <View style={styles.tableRow}>
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.scrollViewContainer}
+        >
+          <Text style={styles.tableCellNarrow}>#{item.id.toString()}</Text>
+          <Text style={styles.tableCellName}>{item.name}</Text>
+          <Text style={styles.tableCellPhone}>{item.phone}</Text>
+          <Text style={styles.tableCellTown}>{item.town}</Text>
+          <Text style={styles.tableCellNarrow}>{regionNames[item.region] || "Unknown"}</Text>
+          <Text style={styles.tableCellDate}>
+            {new Date(item.added_on).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            })}, at {new Date(item.added_on).toLocaleTimeString()}
+          </Text>
+        </ScrollView>
+      </View>
+    );
+  };
+  
+  
   return (
     <View style={styles.container}>
-      <ScrollView>
         <Header pageTitle="Customers" firstName={user.first_name} lastName={user.last_name} />
         <View style={styles.customer}>
           <TouchableOpacity
@@ -46,12 +88,17 @@ export default function CustomersScreen() {
             <Text style={styles.text}>New Customer</Text>
           </TouchableOpacity>
         </View>
-
         <View style={styles.listContainer}>
           <Text style={styles.listTitle}>Customers List</Text>
-          
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={true}>
+            <FlatList
+              data={customers}
+              renderItem={renderItem}
+              keyExtractor={item => item.id}
+              ListEmptyComponent={<Text>No customers found</Text>}
+            />
+          </ScrollView>
         </View>
-      </ScrollView>
     </View>
   );
 }
@@ -104,11 +151,59 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderBottomColor: Colors.GRAY,
-    paddingVertical: 10,
+    borderBottomColor: Colors.GREY,
+    paddingVertical: 5,
   },
-  tableCell: {
-    flex: 1,
-    fontSize: 18,
+  scrollViewContainer: {
+    flexGrow: 1, // Ensures that the container fills the space for smaller content
+    alignItems: 'center', // Align items for better control in the horizontal layout
+  },
+  tableRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.GRAY,
+    paddingVertical: 5,
+  },
+  tableCellName: {
+    width: 170, // Ensure minimum width for readability
+    textAlign: 'left',
+    fontSize: 16,
+    padding: 10,
+    fontWeight: 'bold', 
+  },
+  tableCellPhone: {
+    width: 120, // Ensure minimum width for readability
+    textAlign: 'left',
+    fontSize: 16,
+    padding: 10,
+    fontWeight: 'bold', 
+  },
+  tableCellTown: {
+    width: 120, // Minimum width for narrower cells
+    textAlign: 'left',
+    fontSize: 16,
+    padding: 6,
+    fontWeight: 'bold', 
+  },
+  tableCellRegion: {
+    width: 100, // Minimum width for narrower cells
+    textAlign: 'left',
+    fontSize: 16,
+    padding: 10,
+    fontWeight: 'bold', 
+  },
+  tableCellDate: {
+    minWidth: 160, // Ensure minimum width for readability
+    textAlign: 'left',
+    fontSize: 16,
+    paddingLeft: 16,
+    fontWeight: 'bold', 
+  },
+  tableCellNarrow: {
+    minWidth: 40, // Minimum width for narrower cells
+    textAlign: 'left',
+    fontSize: 16,
+    fontWeight: 'bold', 
+    padding: 6,
   },
 });
