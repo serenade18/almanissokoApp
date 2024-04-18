@@ -1,25 +1,40 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import debounce from 'lodash.debounce';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import Header from '../../components/header';
 import { useAuth } from '../../services/authProvider';
 import Colors from '../../utils/Colors';
 import { Entypo } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
+import { searchCustomer } from '../../services/api';
+
 
 export default function Home() {
   const { user } = useAuth();
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    phone: '',
+    customerName: '',
+    customerId: '',
+    town: '',
+    kilos: '',
+    packaging: '',
+    discount: '',
+    transport: '',
+    transporters: '',
+    rider: '',
+    comment: '',
+    farmer: '',
+    vat: '',
+    riceType: '',
+    farmerPrice: '',
+    almanisPrice: '',
+    amount: '',
+  });
+  const [searchText, setSearchText] = useState('');
+  const [customerResults, setCustomerResults] = useState([])
 
   const [vat, setVat] = useState("");
   const [rice, setRice] = useState("");
-
-  // Handle input changes
-  const handleChange = (name, value) => {
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
 
   // Handle form submission
   const handleSubmit = () => {
@@ -27,8 +42,39 @@ export default function Home() {
     // Submit logic here
   };
 
+  // Handle input changes for the form data
+  const handleChange = (name, value) => {
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  // Debounce setup
+  const debounceSearch = useCallback(debounce(async (text) => {
+    const results = await searchCustomer(text);
+    setCustomerResults(results || []);
+  }, 300), []); // Ensure this is correctly set up
+
+  // Event handler that uses debounce
+  const handleSearchCustomer = (text) => {
+    setSearchText(text); // Update the local state immediately
+    debounceSearch(text); // Call the debounced function
+  };
+
+  const handleSelectCustomer = (customer) => {
+    setFormData({
+      ...formData,
+      phone: customer.phone,
+      customerName: customer.name,
+      customerId: customer.id,
+    });
+    setCustomerResults([]); // Clear results after selection
+  };
+
   return (
     <View style={styles.container}>
+      
       <ScrollView >
         <Header pageTitle="New Orders" firstName={user.first_name} lastName={user.last_name} />
         <View style={styles.customer}>
@@ -43,7 +89,7 @@ export default function Home() {
         </View>
 
         <View style={styles.formContainer}>
-          <Text style={{ fontSize: 27, color: Colors.BLACK, textAlign: 'start', paddingTop: 15, paddingBottom: 20 }}>
+          <Text style={{ fontSize: 27, color: Colors.BLACK, paddingTop: 15, paddingBottom: 20 }}>
             Place Order
           </Text>
           <View style={styles.inputRow}>
@@ -51,17 +97,26 @@ export default function Home() {
               style={styles.input}
               placeholder="Phone Number"
               placeholderTextColor={Colors.BLACK}
-              // value={email}
-              // onChangeText={setEmail}
+              onChangeText={handleSearchCustomer}
+              value={formData.phone || ''}
+              onBlur={() => setCustomerResults([])}
               required
             />
+            {customerResults.length > 0 && (
+              <View style={styles.resultsContainer}>
+                {customerResults.map(item => (
+                  <TouchableOpacity key={item.id} onPress={() => handleSelectCustomer(item)} style={styles.resultItem}>
+                    <Text>{item.phone} - {item.name}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
             <TextInput
               style={styles.input}
               placeholder="Customer Name"
               placeholderTextColor={Colors.BLACK}
-              // value={email}
-              // onChangeText={setEmail}
-              required
+              onChangeText={(text) => handleChange('customerName', text)}
+              value={formData.customerName || ''}
             />
           </View>
           <View style={styles.inputRow}>
@@ -69,8 +124,8 @@ export default function Home() {
               style={styles.input}
               placeholder="Customer No"
               placeholderTextColor={Colors.BLACK}
-              // value={email}
-              // onChangeText={setEmail}
+              onChangeText={(text) => handleChange('customerId', text)}
+              value={formData.customerId || ''}
               required
             />
             <TextInput
@@ -283,6 +338,24 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: 'center',
     marginTop: 20,
+  },
+  resultsContainer: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    top: 60,  // Adjust this value based on the height of the TextInput
+    width: '48%',  // Match the width of the phone input
+    left: 10,  // Match the left position of the phone input
+    borderColor: 'lightgray',
+    borderWidth: 1,
+    borderRadius: 5,
+    zIndex: 1000,  // High z-index to ensure it overlays other content
+    maxHeight: 200,  // Set a max-height for scrolling within the container
+    overflow: 'visible',  // Hide overflow
+  },
+  resultItem: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: 'lightgray',
   },
   clearButton: {
     flexDirection: 'row',
