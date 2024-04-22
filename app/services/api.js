@@ -197,3 +197,32 @@ export const fetchAllOrders = async () => {
         throw new Error("Failed to fetch orders data due to network or server error."); // Provide user-friendly error message
     }
 };
+
+// Paymentss Action
+
+export const fetchAllPayments = async () => {
+    const token = await AsyncStorage.getItem(TOKEN_KEY); // Retrieve the token
+
+    if (!token) {
+        console.error("No access token available."); // Log and handle cases where no token is found
+        throw new Error("Authentication token is not available.");
+    }
+
+    try {
+        // Make an HTTP GET request to fetch all Payments data
+        const response = await Axios.get(`${BASE_URL}/api/payments/`, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Use the retrieved token for authorization
+            },
+        });
+
+        if (response.status === 200) {
+            return response.data; // Return the fetched data directly if the request is successful
+        } else {
+            throw new Error(`Failed to fetch Payments data: Status code ${response.status}`); // Provide detailed error info
+        }
+    } catch (error) {
+        console.error("Error fetching Payments data:", error); // Log the error for debugging
+        throw new Error("Failed to fetch Payments data due to network or server error."); // Provide user-friendly error message
+    }
+};

@@ -62,7 +62,7 @@ export default function FarmersScreen() {
   return (
     <View style={styles.container}>
       <Header pageTitle="Farmers" firstName={user.first_name} lastName={user.last_name} />
-      <View style={styles.farmer}>
+        <View style={styles.farmer}>
           <TouchableOpacity
             style={styles.clearButton}
             onPress={handleNewFarmer}
