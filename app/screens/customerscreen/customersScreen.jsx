@@ -27,7 +27,7 @@ export default function CustomersScreen() {
       const response = await fetchAllCustomer();
       if (response.error === false) {  // Assuming the API sends this in response
         console.log('Customers fetched:', response.data); // Log to check the structure
-        setCustomers(response.data); // Make sure this matches the actual path to the data array
+        setCustomers(response.data.results); // Make sure this matches the actual path to the data array
       } else {
         console.error('Failed to fetch customers:', response.message);
       }
@@ -157,12 +157,6 @@ const styles = StyleSheet.create({
   scrollViewContainer: {
     flexGrow: 1, // Ensures that the container fills the space for smaller content
     alignItems: 'center', // Align items for better control in the horizontal layout
-  },
-  tableRow: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.GRAY,
-    paddingVertical: 5,
   },
   tableCellName: {
     width: 170, // Ensure minimum width for readability

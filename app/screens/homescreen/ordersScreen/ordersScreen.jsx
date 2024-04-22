@@ -13,7 +13,7 @@ export default function OderssScreen() {
   const [refreshing, setRefreshing] = useState(false);
 
   const handleNewOrder = () => {
-    navigation.navigate('AddCustomer');
+    navigation.navigate('New Orders');
   }
 
   const [orders, setOrders] = useState([]);
@@ -28,7 +28,7 @@ export default function OderssScreen() {
       const response = await fetchAllOrders();
       if (response.error === false) {  // Assuming the API sends this in response
         console.log('orders fetched:', response.data); // Log to check the structure
-        setOrders(response.data); // Make sure this matches the actual path to the data array
+        setOrders(response.data.results); // Make sure this matches the actual path to the data array
       } else {
         console.error('Failed to fetch orders:', response.message);
       }
@@ -165,12 +165,6 @@ const styles = StyleSheet.create({
   scrollViewContainer: {
     flexGrow: 1, // Ensures that the container fills the space for smaller content
     alignItems: 'center', // Align items for better control in the horizontal layout
-  },
-  tableRow: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.GRAY,
-    paddingVertical: 5,
   },
   tableCellName: {
     width: 170, // Ensure minimum width for readability

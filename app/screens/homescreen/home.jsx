@@ -83,7 +83,7 @@ export default function Home() {
       try {
         const results = await searchCustomer(text, token);  // Attempt to fetch customer data
         console.log(results)
-        setCustomerResults(results || []);  // Update state with results or empty array if undefined
+        setCustomerResults(results.results || []);  // Update state with results or empty array if undefined
       } catch (error) {
         console.error('Failed to fetch customer data:', error);  // Log error to console
         setCustomerResults([]);  // Optionally handle the error in the UI, e.g., show an error message
