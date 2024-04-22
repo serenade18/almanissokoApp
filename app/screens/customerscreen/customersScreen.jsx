@@ -49,7 +49,6 @@ export default function CustomersScreen() {
   };
   
   const renderItem = ({ item }) => {
-    // Create a new Date object from the added_on string
   
     return (
       <View style={styles.tableRow}>
