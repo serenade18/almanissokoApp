@@ -12,7 +12,7 @@ export default function PaymentsScreen() {
   const navigation = useNavigation();
 
   const handleNewPayment = () => {
-    navigation.navigate('AddCustomer');
+    navigation.navigate('AddPayment');
   }
 
   const [payments, setPayments] = useState([]);
@@ -183,4 +183,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold', 
     padding: 6,
   },
+  renderText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    padding: 6,
+    alignItems: 'center',
+    marginTop: -2
+  }
 });

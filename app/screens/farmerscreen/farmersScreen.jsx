@@ -12,7 +12,7 @@ export default function FarmersScreen() {
   const navigation = useNavigation();
 
   const handleNewFarmer = () => {
-    navigation.navigate('AddCustomer');
+    navigation.navigate('AddFarmer');
   }
 
   const [farmers, setFarmers] = useState([]);
@@ -183,5 +183,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold', 
     padding: 6,
   },
+  renderText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    padding: 6,
+    alignItems: 'center',
+    marginTop: -2
+  }
 });
 

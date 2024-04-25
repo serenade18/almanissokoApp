@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList, RefreshControl } from 'react-native';
 import { useAuth } from '../../../services/authProvider';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo,  MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Colors from '../../../utils/Colors';
 import { fetchAllOrders } from '../../../services/api';
@@ -69,12 +69,19 @@ export default function OderssScreen() {
                 year: 'numeric'
             })}, at {new Date(item.added_on).toLocaleTimeString()}
           </Text>
+          <TouchableOpacity style={styles.tableCellNarrow}>
+            <Text style={styles.renderText}>
+            <MaterialIcons name="edit-square" size={19} color="green" /> Edit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tableCellNarrow}>
+            <Text style={styles.renderText}>
+            <MaterialCommunityIcons name="delete-forever" size={21} color="red" /> Delete</Text>
+          </TouchableOpacity>
           <Text style={styles.tableCellUser}>{item.user}</Text>
         </ScrollView>
       </View>
     );
   };
-  
   
   return (
     <View style={styles.container}>
@@ -215,4 +222,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold', 
     padding: 6,
   },
+  renderText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    padding: 6,
+    alignItems: 'center',
+    marginTop: -2
+  }
 });

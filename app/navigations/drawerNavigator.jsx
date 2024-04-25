@@ -16,6 +16,9 @@ import DeliveryNoteScreen from '../screens/homescreen/deliveryscreen/deliveryNot
 import OrdersScreen from '../screens/homescreen/ordersScreen/ordersScreen'
 import { MaterialIcons, Entypo, FontAwesome, FontAwesome5, FontAwesome6, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import AddCustomerScreen from '../screens/customerscreen/addCustomerScreen';
+import AddFarmerScreen from '../screens/farmerscreen/addFarmerScreen';
+import AddPaymentsScreen from '../screens/paymentscreen/addPaymentScreen'
+import AddInvoiceScreen from '../screens/homescreen/invoicescreen/invoicesScreen'
 
 const Drawer = createDrawerNavigator();
 const CustomerStack = createStackNavigator();
@@ -44,8 +47,8 @@ function HomeStackNavigator() {
 function FarmerStackNavigator() {
   return (
     <FarmerStack.Navigator screenOptions={{ headerShown: false }}>
-      <FarmerStack.Screen name="Home" component={Home} />
-      <FarmerStack.Screen name="AddCustomer" component={AddCustomerScreen} />
+      <FarmerStack.Screen name="Farmers" component={FarmersScreen} />
+      <FarmerStack.Screen name="AddFarmer" component={AddFarmerScreen} />
     </FarmerStack.Navigator>
   );
 }
@@ -53,9 +56,18 @@ function FarmerStackNavigator() {
 function PaymentStackNavigator() {
   return (
     <PaymentStack.Navigator screenOptions={{ headerShown: false }}>
-      <PaymentStack.Screen name="Home" component={Home} />
-      <PaymentStack.Screen name="AddCustomer" component={AddCustomerScreen} />
+      <PaymentStack.Screen name="Payments" component={PaymentsScreen} />
+      <PaymentStack.Screen name="AddPayment" component={AddPaymentsScreen} />
     </PaymentStack.Navigator>
+  );
+}
+
+function InvoiceStackNavigator() {
+  return (
+    <InvoiceStack.Navigator screenOptions={{ headerShown: false }}>
+      <InvoiceStack.Screen name="Invoice" component={InvoicesScreen} />
+      <InvoiceStack.Screen name="AddInvoice" component={AddInvoiceScreen} />
+    </InvoiceStack.Navigator>
   );
 }
 
@@ -177,7 +189,7 @@ export default function DrawerNavigator() {
     {user && user.user_type === 'admin' && (
       <Drawer.Screen 
         name="Payments" 
-        component={PaymentsScreen} 
+        component={PaymentStackNavigator} 
         options={{
           drawerIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="hand-coin" size={size} color={color} />
@@ -187,7 +199,7 @@ export default function DrawerNavigator() {
     )}
       <Drawer.Screen 
         name="Farmers" 
-        component={FarmersScreen} 
+        component={FarmerStackNavigator} 
         options={{
           drawerIcon: ({ color, size }) => (
             <FontAwesome6 name="tractor" size={size} color={color} />
@@ -196,7 +208,7 @@ export default function DrawerNavigator() {
       />
       <Drawer.Screen 
         name="Invoice" 
-        component={InvoicesScreen} 
+        component={InvoiceStackNavigator} 
         options={{
           drawerIcon: ({ color, size }) => (
             <FontAwesome5 name="file-invoice" size={size} color={color} />

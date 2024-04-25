@@ -199,4 +199,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold', 
     padding: 6,
   },
+  renderText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    padding: 6,
+    alignItems: 'center',
+    marginTop: -2
+  }
 });
