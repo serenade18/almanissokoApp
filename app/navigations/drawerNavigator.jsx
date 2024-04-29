@@ -18,13 +18,14 @@ import { MaterialIcons, Entypo, FontAwesome, FontAwesome5, FontAwesome6, Materia
 import AddCustomerScreen from '../screens/customerscreen/addCustomerScreen';
 import AddFarmerScreen from '../screens/farmerscreen/addFarmerScreen';
 import AddPaymentsScreen from '../screens/paymentscreen/addPaymentScreen'
-import AddInvoiceScreen from '../screens/homescreen/invoicescreen/invoicesScreen'
+import AddInvoice from '../screens/homescreen/invoicescreen/addInvoice'
 
 const Drawer = createDrawerNavigator();
 const CustomerStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 const FarmerStack = createStackNavigator();
 const PaymentStack = createStackNavigator();
+const InvoiceStack = createStackNavigator();
 
 function CustomerStackNavigator() {
   return (
@@ -66,7 +67,7 @@ function InvoiceStackNavigator() {
   return (
     <InvoiceStack.Navigator screenOptions={{ headerShown: false }}>
       <InvoiceStack.Screen name="Invoice" component={InvoicesScreen} />
-      <InvoiceStack.Screen name="AddInvoice" component={AddInvoiceScreen} />
+      <InvoiceStack.Screen name="AddInvoice" component={AddInvoice} />
     </InvoiceStack.Navigator>
   );
 }

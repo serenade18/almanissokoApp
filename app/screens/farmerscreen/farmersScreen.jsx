@@ -5,7 +5,7 @@ import { useAuth } from '../../services/authProvider';
 import { useNavigation } from '@react-navigation/native';
 import { fetchAllFarmers } from '../../services/api';
 import Colors from '../../utils/Colors';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function FarmersScreen() {
   const { user } = useAuth();

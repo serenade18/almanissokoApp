@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList, RefreshControl } from 'react-native';
 import { useAuth } from '../../../services/authProvider';
-import { Entypo,  MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Entypo, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Colors from '../../../utils/Colors';
 import { fetchAllOrders } from '../../../services/api';

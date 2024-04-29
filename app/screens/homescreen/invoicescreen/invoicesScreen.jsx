@@ -4,7 +4,7 @@ import Header from '../../../components/mainheader/header'
 import { useAuth } from '../../../services/authProvider';
 import { useNavigation } from '@react-navigation/native';
 import Colors from '../../../utils/Colors';
-import { Entypo } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import { fetchAllInvoice } from '../../../services/api';
 
 export default function InvoicesScreen() {
@@ -45,8 +45,9 @@ export default function InvoicesScreen() {
           contentContainerStyle={styles.scrollViewContainer}
         >
           <Text style={styles.tableCellNarrow}>#{item.id.toString()}</Text>
-          <Text style={styles.tableCellName}>{item.name}</Text>
-          <Text style={styles.tableCellPhone}>{item.phone}</Text>
+          <Text style={styles.tableCellName}>{item.customer.name}</Text>
+          <Text style={styles.tableCellPhone}>{item.customer.phone}</Text>
+          <Text style={styles.tableCellTown}>{item.customer.town}</Text>
           <Text style={styles.tableCellDate}>
             {new Date(item.added_on).toLocaleDateString('en-US', {
                 month: 'short',
@@ -54,6 +55,14 @@ export default function InvoicesScreen() {
                 year: 'numeric'
             })}, at {new Date(item.added_on).toLocaleTimeString()}
           </Text>
+          <TouchableOpacity style={styles.tableCellNarrow}>
+            <Text style={styles.renderText}>
+            <FontAwesome5 name="eye" size={19} color="green" /> View</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tableCellNarrow}>
+            <Text style={styles.renderText}>
+            <MaterialCommunityIcons name="delete-forever" size={21} color="red" /> Delete</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     );
@@ -67,8 +76,8 @@ export default function InvoicesScreen() {
             style={styles.clearButton}
             onPress={handleNewInvoice}
           >
-            <Entypo name="add-user" size={38} color={Colors.PRIMARY} />
-            <Text style={styles.text}>New Invoice</Text>
+            <MaterialIcons name="receipt-long" size={38} color={Colors.PRIMARY} />
+            <Text style={styles.text}>Generate Invoice</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.listContainer}>
@@ -183,5 +192,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold', 
     padding: 6,
   },
+  renderText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    padding: 6,
+    alignItems: 'center',
+    marginTop: -2
+  }
 });
 

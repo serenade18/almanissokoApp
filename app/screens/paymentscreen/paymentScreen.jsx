@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList } from '
 import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../services/authProvider';
 import Header from '../../components/mainheader/header';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { fetchAllPayments } from '../../services/api';
 import Colors from '../../utils/Colors';

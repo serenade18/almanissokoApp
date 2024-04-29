@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import Header from '../../components/mainheader/header';
 import { useAuth } from '../../services/authProvider';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, FontAwesome5, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Colors from '../../utils/Colors';
 import { fetchAllCustomer } from '../../services/api';
@@ -69,6 +69,14 @@ export default function CustomersScreen() {
                 year: 'numeric'
             })}, at {new Date(item.added_on).toLocaleTimeString()}
           </Text>
+          <TouchableOpacity style={styles.tableCellNarrow}>
+            <Text style={styles.renderText}>
+            <FontAwesome5 name="user-edit" size={19} color="green" /> Edit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tableCellNarrow}>
+            <Text style={styles.renderText}>
+            <FontAwesome name="user-times" size={21} color="red" /> Delete</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     );
