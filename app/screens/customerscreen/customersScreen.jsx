@@ -26,7 +26,7 @@ export default function CustomersScreen() {
     try {
       const response = await fetchAllCustomer();
       if (response.error === false) {  // Assuming the API sends this in response
-        console.log('Customers fetched:', response.data); // Log to check the structure
+        // console.log('Customers fetched:', response.data); // Log to check the structure
         setCustomers(response.data.results); // Make sure this matches the actual path to the data array
       } else {
         console.error('Failed to fetch customers:', response.message);

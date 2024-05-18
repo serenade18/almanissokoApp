@@ -3,7 +3,7 @@ import React from 'react'
 import { useAuth } from '../../services/authProvider'
 import SubHeader from '../../components/subheader/subheader'
 
-export default function addPaymentScreen() {
+export default function AddPaymentScreen() {
   const { user } = useAuth()
 
   return (

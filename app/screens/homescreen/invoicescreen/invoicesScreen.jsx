@@ -4,7 +4,7 @@ import Header from '../../../components/mainheader/header'
 import { useAuth } from '../../../services/authProvider';
 import { useNavigation } from '@react-navigation/native';
 import Colors from '../../../utils/Colors';
-import { MaterialIcons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome5, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import { fetchAllInvoice } from '../../../services/api';
 
 export default function InvoicesScreen() {
@@ -25,7 +25,7 @@ export default function InvoicesScreen() {
     try {
       const response = await fetchAllInvoice();
       if (response.error === false) {  // Assuming the API sends this in response
-        console.log('Invoices fetched:', response.data); // Log to check the structure
+        // console.log('Invoices fetched:', response.data); // Log to check the structure
         setInvoice(response.data); // Make sure this matches the actual path to the data array
       } else {
         console.error('Failed to fetch Invoices:', response.message);
@@ -57,7 +57,7 @@ export default function InvoicesScreen() {
           </Text>
           <TouchableOpacity style={styles.tableCellNarrow}>
             <Text style={styles.renderText}>
-            <FontAwesome5 name="eye" size={19} color="green" /> View</Text>
+            <Entypo name="download" size={19} color="green" /> Download</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.tableCellNarrow}>
             <Text style={styles.renderText}>

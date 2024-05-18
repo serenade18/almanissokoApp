@@ -48,7 +48,7 @@ function HomeStackNavigator() {
 function FarmerStackNavigator() {
   return (
     <FarmerStack.Navigator screenOptions={{ headerShown: false }}>
-      <FarmerStack.Screen name="Farmers" component={FarmersScreen} />
+      <FarmerStack.Screen name="Farmer" component={FarmersScreen} />
       <FarmerStack.Screen name="AddFarmer" component={AddFarmerScreen} />
     </FarmerStack.Navigator>
   );
@@ -57,7 +57,7 @@ function FarmerStackNavigator() {
 function PaymentStackNavigator() {
   return (
     <PaymentStack.Navigator screenOptions={{ headerShown: false }}>
-      <PaymentStack.Screen name="Payments" component={PaymentsScreen} />
+      <PaymentStack.Screen name="Payment" component={PaymentsScreen} />
       <PaymentStack.Screen name="AddPayment" component={AddPaymentsScreen} />
     </PaymentStack.Navigator>
   );

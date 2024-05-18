@@ -22,6 +22,7 @@ export const login = async (email, password) => {
 export const resetPassword = async (email) => {
     try {
         const response = await Axios.post(`${BASE_URL}/auth/users/reset_password/`, { email });
+        console.log('response', response)
         if (response.status === 204) {
             return 'Reset password instructions sent.';
         } else {
@@ -168,6 +169,22 @@ export const fetchAllFarmers = async () => {
         throw new Error("Failed to fetch farmers data due to network or server error."); // Provide user-friendly error message
     }
 };
+
+export const deleteFarmers = async (id) => {
+    const token = await AsyncStorage.getItem(TOKEN_KEY);
+
+    if (!token) {
+        console.error("No access token available")
+        throw new Error("Authentication is not available")
+    }
+
+    try {
+        const response = await Axios.delete(`${BASE_URL}/api/farmer`)
+    } catch (error) {
+        console.error("Error deleting farmers data", error)
+        throw new Error("Failed to delete farmers data due to netwokrk or server error")
+    }
+}
 
 // Orders action
 

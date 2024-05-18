@@ -25,7 +25,7 @@ export default function FarmersScreen() {
     try {
       const response = await fetchAllFarmers();
       if (response.error === false) {  // Assuming the API sends this in response
-        console.log('Farmers fetched:', response.data); // Log to check the structure
+        // console.log('Farmers fetched:', response.data); // Log to check the structure
         setFarmers(response.data.results); // Make sure this matches the actual path to the data array
       } else {
         console.error('Failed to fetch Farmers:', response.message);

@@ -10,7 +10,7 @@ import ResetPassword from './app/screens/authscreens/resetpasswordScreen/resetPa
 import 'react-native-gesture-handler';
 import { AuthProvider, useAuth } from './app/services/authProvider'; // Make sure this import path is correct
 import DrawerNavigator from './app/navigations/drawerNavigator'; 
-
+import { useFonts } from 'expo-font';
 
 const Stack = createStackNavigator();
 
@@ -41,6 +41,12 @@ function AppContent() {
 }
 
 export default function App() {
+  const [fontsLoaded, fontError] = useFonts({
+    'Aleo': require('./assets/fonts/Aleo-Regular.ttf'),
+    'Aleo-medium': require('./assets/fonts/Aleo-Medium.ttf'),
+    'Aleo-bold': require('./assets/fonts/Aleo-Bold.ttf'),
+  });
+
   return (
     <AuthProvider> 
       <NavigationContainer>

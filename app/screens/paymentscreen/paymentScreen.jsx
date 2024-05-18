@@ -25,7 +25,7 @@ export default function PaymentsScreen() {
     try {
       const response = await fetchAllPayments();
       if (response.error === false) {  // Assuming the API sends this in response
-        console.log('Payments fetched:', response.data); // Log to check the structure
+        // console.log('Payments fetched:', response.data); // Log to check the structure
         setPayments(response.data.results); // Make sure this matches the actual path to the data array
       } else {
         console.error('Failed to fetch Payments:', response.message);
@@ -44,9 +44,31 @@ export default function PaymentsScreen() {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.scrollViewContainer}
         >
-          <Text style={styles.tableCellNarrow}>#{item.id.toString()}</Text>
-          <Text style={styles.tableCellName}>{item.name}</Text>
-          <Text style={styles.tableCellPhone}>{item.phone}</Text>
+          <Text style={styles.tableCellID}>#{item.id.toString()}</Text>
+          <Text style={styles.tableCellNarrow}>{item.orders_id.toString()}</Text>
+          <Text style={styles.tableCellName}>{item.customer.name}</Text>
+          <Text style={styles.tableCellPhone}>{item.amount}</Text>
+          <Text style={styles.tableCellName}>{item.paying_number}</Text>
+          <Text style={styles.tableCellPhone}>{item.payment}</Text>
+          <Text style={styles.tableCellPhone}>
+            {
+              item.payment_mode === 1
+              ? "Cash"
+              : item.payment_mode === 2
+              ? "Mpesa"
+              : item.payment_mode === 3
+              ? "Bank"
+              : item.payment_mode === 4
+              ? "Trade In"
+              : item.payment_mode === 5
+              ? "Promotion"
+              : item.payment_mode === 6
+              ? "Compensation"
+              : item.payment_mode === 7
+              ? "Top up"
+              : item.payment_mode
+            }
+          </Text>
           <Text style={styles.tableCellDate}>
             {new Date(item.added_on).toLocaleDateString('en-US', {
                 month: 'short',
@@ -54,6 +76,14 @@ export default function PaymentsScreen() {
                 year: 'numeric'
             })}, at {new Date(item.added_on).toLocaleTimeString()}
           </Text>
+          <TouchableOpacity style={styles.tableCellNarrow}>
+            <Text style={styles.renderText}>
+            <MaterialIcons name="edit-square" size={19} color="green" /> Edit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tableCellNarrow}>
+            <Text style={styles.renderText}>
+            <MaterialCommunityIcons name="delete-forever" size={21} color="red" /> Delete</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     );
@@ -176,12 +206,19 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     fontWeight: 'bold', 
   },
+  tableCellID: {
+    minWidth: 40, // Minimum width for narrower cells
+    textAlign: 'left',
+    fontSize: 16,
+    fontWeight: 'bold', 
+    padding: 16,
+  },
   tableCellNarrow: {
     minWidth: 40, // Minimum width for narrower cells
     textAlign: 'left',
     fontSize: 16,
     fontWeight: 'bold', 
-    padding: 6,
+    padding: 10,
   },
   renderText: {
     fontSize: 16,
