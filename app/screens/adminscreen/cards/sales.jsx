@@ -1,23 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import Colors from '../../../utils/Colors';
+import { useAuth } from '../../../services/authProvider';
+import { fetchDashboard } from '../../../services/api';
 
 export default function Sales() {
-  const [currentDate, setCurrentDate] = useState('');
+    const [grossSales, setGrossSales] = useState(0);
+    const [grossProfit, setGrossProfits] = useState(0);
+    const [piadFarmers, setPaidFarmers] = useState(0);
+    const [totalOverhead, setTotalOverhead] = useState(0);
 
-  useEffect(() => {
-    const today = new Date();
-    const month = today.toLocaleString('default', { month: 'long' });
-    const day = today.getDate();
-    const formattedDate = `${month} ${day}`;
-    setCurrentDate(formattedDate);
-  }, []);
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+          const response = await fetchDashboard();
+          if (response.error === false) {  // Assuming the API sends this in response
+            console.log('Customers fetched:', response); // Log to check the structure
+            setGrossSales(response.buy_total);
+            setGrossProfits(response.profit);
+            setPaidFarmers(response.rice);
+            setTotalOverhead(response.overhead)
+          } else {
+            console.error('Failed to fetch customers:', response.message);
+          }
+        } catch (error) {
+          console.error('Error fetching customer data:', error);
+        }
+    };
+    console.log("Gross Sales",grossSales)  
+    console.log("Gross Profit",grossProfit)
+    console.log("Gross Farmers",piadFarmers)
+    console.log("Gross Overheads",totalOverhead)
 
   const salesData = [
-    { title: 'Gross Sales', value: 'Ksh 94,818,581.60', change: '+12.33%' },
-    { title: 'Gross Profit', value: 'Ksh 1,639,446.10', change: '+10.6%' },
-    { title: 'Paid To Farmers', value: 'Ksh 92,818,581.50', change: '+3%' },
-    { title: 'Total Overheads', value: 'Ksh 1,639,446.10', change: '+8%' },
+    { title: 'Gross Sales', value: `${grossSales}`, change: '+12.33%' },
+    { title: 'Gross Profit', value: `${grossProfit}`, change: '+10.6%' },
+    { title: 'Paid To Farmers', value: `${piadFarmers}`, change: '+3%' },
+    { title: 'Total Overheads', value: `${totalOverhead}`, change: '+8%' },
     { title: 'Total Discount', value: 'Ksh 1,639,446.10', change: '+8%' },
     { title: 'Total Paid', value: 'Ksh 92,639,446.10', change: '+8%' },
     { title: 'Total Kilos', value: 'Ksh 1,639,446.10', change: '+8%' },
@@ -36,10 +58,10 @@ export default function Sales() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.dateContainer}>
-        <Text style={styles.headerText}>System Overview</Text>
+      {/* <View style={styles.dateContainer}>
+        <Text style={styles.headerText}></Text>
         <Text style={styles.dateButton}>{currentDate}</Text>
-      </View>
+      </View> */}
       <FlatList data={salesData} renderItem={renderItem} numColumns={2} keyExtractor={(item, index) => `${index}`} />
     </View>
   );
