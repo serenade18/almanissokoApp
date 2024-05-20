@@ -1,48 +1,75 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Colors from '../../../utils/Colors';
 import { AntDesign } from '@expo/vector-icons';
 // import { VictoryBar, VictoryChart, VictoryTheme } from "victory-native";
 import { BarChart, LineChart, PieChart, PopulationPyramid } from "react-native-gifted-charts";
+import { fetchMonthlyData } from '../../../services/api';
 
-export default function YearlySales() {
+export default function MonthlySales() {
     const [currentDate, setCurrentDate] = useState(new Date());
+    const [chartData, setMonthChart] = useState(null);
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+    const fetchData = async () => {
+        try {
+            const response = await fetchMonthlyData();
+            if (response.error === false) {
+                const currentYearData = response.month_chart;
+                setMonthChart(currentYearData);
+            } else {
+                console.error('Failed to fetch data:', response.message)
+            }
+        } catch (error) {
+            console.error('Failed to fetch data:', error)
+        }
+    }
+
+    const randomColor = () => {
+        return '#' + Math.floor(Math.random()*16777215).toString(16);
+    }
+
+    const formatMonth = (dateString) => {
+        const date = new Date(dateString);
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        const monthIndex = date.getMonth();
+        const year = date.getFullYear();
+        return `${monthNames[monthIndex]} ${year}`;
+    }
     
-    const data = [
-        {value: 250, label: 'M'},
-        {value: 500, label: 'T', frontColor: '#177AD5'},
-        {value: 745, label: 'W', frontColor: '#177AD5'},
-        {value: 320, label: 'T'},
-        {value: 600, label: 'F', frontColor: '#177AD5'},
-        {value: 256, label: 'S'},
-        {value: 300, label: 'S'},
-    ]
 
     return (
         <View style={styles.container}>
             <View style={styles.formContainer}>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>Yearly Sales</Text>
+                    <Text style={styles.title}>Monthly Sales</Text>
                     <Text style={styles.date}>
-                    <AntDesign name="calendar" size={24} color="black" /> {currentDate.toLocaleDateString('en-US', {
+                        <AntDesign name="calendar" size={24} color="black" /> {currentDate.toLocaleDateString('en-US', {
                             month: 'short',
-                            day: 'numeric',
                             year: 'numeric'
                         })}
                     </Text>
                 </View>
                 <View>
-                    <BarChart 
-                        barWidth={22}
-                        noOfSections={4}
-                        barBorderRadius={4}
-                        frontColor="lightgray"
-                        data = {data} 
-                        yAxisThickness={0}
-                        xAxisThickness={0}
-                        isAnimated
-                        showFractionalValue
-                    />
+                    {Array.isArray(chartData) && chartData.length > 0 && (
+                        <BarChart
+                            barWidth={22}
+                            noOfSections={3}
+                            barBorderRadius={4}
+                            frontColor="lightgray"
+                            data={chartData.map(item => ({ value: item.amt, label: formatMonth(item.date),  frontColor: randomColor() }))}
+                            yAxisThickness={0}
+                            xAxisThickness={0}
+                            isAnimated
+                            showFractionalValue
+                            valueRender={(value) => `${value} KSH`}
+                        />
+                    )}
                 </View>
             </View>
         </View>

@@ -38,16 +38,16 @@ export default function Sales() {
         try {
             const response = await fetchDashboard();
             if (response.error === false) {
-                console.log('Customers fetched:', response);
+                // console.log('data fetched:', response);
                 setGrossSales(response.buy_total);
                 setGrossProfits(response.profit);
                 setPaidFarmers(response.rice);
                 setTotalOverhead(response.overhead);
             } else {
-                console.error('Failed to fetch customers:', response.message);
+                console.error('Failed to fetch data:', response.message);
             }
         } catch (error) {
-            console.error('Error fetching customer data:', error);
+            console.error('Error fetching data:', error);
         }
     };
 
