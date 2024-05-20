@@ -7,5 +7,6 @@ export default {
     TRANSPARENT: '#ffffff00',
     GREY: '#ebebeb',
     GREEN: '#d4e8f0',
-    SIDEBARACTIVE: '#5f6a7c'
+    SIDEBARACTIVE: '#5f6a7c',
+    PURPLE: '#3f0866'
 }
