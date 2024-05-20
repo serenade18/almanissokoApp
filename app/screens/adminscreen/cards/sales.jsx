@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 10,
-        backgroundColor: Colors.LIGHT_GRAY,
+        backgroundColor: Colors.GREY,
     },
     cardsContainer: {
         flexDirection: 'row',
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
     },
-    headerContainer: {
+    headerContainer: { 
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -139,7 +139,6 @@ const styles = StyleSheet.create({
     },
     metricValue: {
         fontSize: 20,
-        fontWeight: 'bolder',
         color: Colors.PRIMARY,
         marginBottom: 5,
         fontFamily: 'Aleo-bold'

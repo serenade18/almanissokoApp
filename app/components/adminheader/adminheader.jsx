@@ -27,13 +27,14 @@ export default function Adminheader({ firstName, lastName }) {
             </View>
             <View style={styles.iconContainer}>
                 <Ionicons name="notifications" size={24} color="black" />
+                <FontAwesome  name="search" size={24} color={Colors.PRIMARY}/>
                 <Image source={Profile} style={styles.profileIcon} />
             </View>
         </View>
-        <View style={styles.searchBarContainer}>
+        {/* <View style={styles.searchBarContainer}>
             <TextInput placeholder='Search' style={styles.textInput}/>
-            <FontAwesome style={styles.search} name="search" size={24} color={Colors.PRIMARY}/>
-        </View>
+            
+        </View> */}
     </View>
   )
 }
