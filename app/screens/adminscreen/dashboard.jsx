@@ -17,7 +17,9 @@ export default function Dashboard() {
         <Sales/>
         <MonthlySales/>
         <Customers/>
-        <Slider/>
+        <View style={{ padding: 10 }}>
+          <Slider/>
+        </View>
       </ScrollView>
     </View>
   )
