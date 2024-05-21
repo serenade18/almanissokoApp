@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "jsEngine": "hermes", 
+    "jsEngine": "hermes",
     "splash": {
       "image": "./assets/logo192.png",
       "resizeMode": "contain",
@@ -22,7 +22,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.almanissokoapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"

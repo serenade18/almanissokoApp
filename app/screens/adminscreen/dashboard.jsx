@@ -7,6 +7,7 @@ import MonthlySales from './graphs/monthlySales';
 import Colors from '../../utils/Colors';
 import Customers from './cards/customers';
 import Slider from './cards/slider';
+import CustomerLocation from './graphs/customerLocation';
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -20,6 +21,7 @@ export default function Dashboard() {
         <View style={{ padding: 10 }}>
           <Slider/>
         </View>
+        <CustomerLocation/>
       </ScrollView>
     </View>
   )

@@ -45,6 +45,10 @@ export default function MonthlySales() {
         return `${monthNames[monthIndex]} ${year}`;
     }
 
+    const formatCurrency = (amount) => {
+        return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.formContainer}>
@@ -60,15 +64,22 @@ export default function MonthlySales() {
                 <View style={styles.chartContainer}>
                     {Array.isArray(chartData) && chartData.length > 0 && (
                         <BarChart
-                            barWidth={22}
+                            barWidth={24}
                             noOfSections={3}
                             barBorderRadius={4}
                             data={chartData.map((item, index) => ({ value: item.amt, label: formatMonth(item.date),  frontColor: colors[index % colors.length] }))}
                             yAxisThickness={0}
                             xAxisThickness={0}
+                            roundedTop
                             isAnimated
+                            height={270}
                             showFractionalValue
                             valueRender={(value) => `${value} KSH`}
+                            renderTooltip={({ value }) => (
+                                <View>
+                                    <Text>Ksh {formatCurrency(value)}</Text>
+                                </View>
+                            )}
                         />
                     )}
                 </View>
@@ -95,7 +106,7 @@ const styles = StyleSheet.create({
       elevation: 5, // Shadow for Android
       marginTop: 5,
       marginBottom: 20,
-      height: screenHeight * 0.385,
+      height: screenHeight * 0.485,
     },
     titleContainer: {
         flexDirection: 'row',
