@@ -5,6 +5,8 @@ import Adminheader from '../../components/adminheader/adminheader';
 import Sales from './cards/sales';
 import MonthlySales from './graphs/monthlySales';
 import Colors from '../../utils/Colors';
+import Customers from './cards/customers';
+import Slider from './cards/slider';
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -14,6 +16,8 @@ export default function Dashboard() {
       <ScrollView>
         <Sales/>
         <MonthlySales/>
+        <Customers/>
+        <Slider/>
       </ScrollView>
     </View>
   )

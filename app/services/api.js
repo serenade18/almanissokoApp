@@ -63,7 +63,7 @@ export const fetchDashboard = async () => {
     }
 
     try {
-        // Make an HTTP GET request to fetch all farmers data
+        // Make an HTTP GET request to fetch all data
         const response = await Axios.get(`${BASE_URL}/api/dashboard/`, {
             headers: {
                 Authorization: `Bearer ${token}`, // Use the retrieved token for authorization
@@ -73,11 +73,11 @@ export const fetchDashboard = async () => {
         if (response.status === 200) {
             return response.data; // Return the fetched data directly if the request is successful
         } else {
-            throw new Error(`Failed to fetch farmers data: Status code ${response.status}`); // Provide detailed error info
+            throw new Error(`Failed to fetch data: Status code ${response.status}`); // Provide detailed error info
         }
     } catch (error) {
-        console.error("Error fetching farmers data:", error); // Log the error for debugging
-        throw new Error("Failed to fetch farmers data due to network or server error."); // Provide user-friendly error message
+        console.error("Error fetching data:", error); // Log the error for debugging
+        throw new Error("Failed to fetch data due to network or server error."); // Provide user-friendly error message
     }
 };
 
@@ -90,7 +90,7 @@ export const fetchDiscount = async () => {
     }
 
     try {
-        // Make an HTTP GET request to fetch all farmers data
+        // Make an HTTP GET request to fetch all discount data
         const response = await Axios.get(`${BASE_URL}/api/total-discount/`, {
             headers: {
                 Authorization: `Bearer ${token}`, // Use the retrieved token for authorization
@@ -100,11 +100,11 @@ export const fetchDiscount = async () => {
         if (response.status === 200) {
             return response.data; // Return the fetched data directly if the request is successful
         } else {
-            throw new Error(`Failed to fetch farmers data: Status code ${response.status}`); // Provide detailed error info
+            throw new Error(`Failed to fetch discount data: Status code ${response.status}`); // Provide detailed error info
         }
     } catch (error) {
-        console.error("Error fetching farmers data:", error); // Log the error for debugging
-        throw new Error("Failed to fetch farmers data due to network or server error."); // Provide user-friendly error message
+        console.error("Error fetching discount data:", error); // Log the error for debugging
+        throw new Error("Failed to fetch discount data due to network or server error."); // Provide user-friendly error message
     }
 };
 
@@ -117,7 +117,7 @@ export const fetchTotalPayments = async () => {
     }
 
     try {
-        // Make an HTTP GET request to fetch all farmers data
+        // Make an HTTP GET request to fetch all payments data
         const response = await Axios.get(`${BASE_URL}/api/total-payment/`, {
             headers: {
                 Authorization: `Bearer ${token}`, // Use the retrieved token for authorization
@@ -127,11 +127,11 @@ export const fetchTotalPayments = async () => {
         if (response.status === 200) {
             return response.data; // Return the fetched data directly if the request is successful
         } else {
-            throw new Error(`Failed to fetch farmers data: Status code ${response.status}`); // Provide detailed error info
+            throw new Error(`Failed to fetch payments data: Status code ${response.status}`); // Provide detailed error info
         }
     } catch (error) {
-        console.error("Error fetching farmers data:", error); // Log the error for debugging
-        throw new Error("Failed to fetch farmers data due to network or server error."); // Provide user-friendly error message
+        console.error("Error fetching payments data:", error); // Log the error for debugging
+        throw new Error("Failed to fetch payments data due to network or server error."); // Provide user-friendly error message
     }
 };
 
@@ -144,7 +144,7 @@ export const fetchTotalKilos = async () => {
     }
 
     try {
-        // Make an HTTP GET request to fetch all farmers data
+        // Make an HTTP GET request to fetch all kilos data
         const response = await Axios.get(`${BASE_URL}/api/total-kgs/`, {
             headers: {
                 Authorization: `Bearer ${token}`, // Use the retrieved token for authorization
@@ -154,11 +154,11 @@ export const fetchTotalKilos = async () => {
         if (response.status === 200) {
             return response.data; // Return the fetched data directly if the request is successful
         } else {
-            throw new Error(`Failed to fetch farmers data: Status code ${response.status}`); // Provide detailed error info
+            throw new Error(`Failed to fetch kilos data: Status code ${response.status}`); // Provide detailed error info
         }
     } catch (error) {
-        console.error("Error fetching farmers data:", error); // Log the error for debugging
-        throw new Error("Failed to fetch farmers data due to network or server error."); // Provide user-friendly error message
+        console.error("Error fetching kilos data:", error); // Log the error for debugging
+        throw new Error("Failed to fetch kilos data due to network or server error."); // Provide user-friendly error message
     }
 };
 
@@ -171,7 +171,7 @@ export const fetchDebtors = async () => {
     }
 
     try {
-        // Make an HTTP GET request to fetch all farmers data
+        // Make an HTTP GET request to fetch all debtors data
         const response = await Axios.get(`${BASE_URL}/api/customers/total-balance/`, {
             headers: {
                 Authorization: `Bearer ${token}`, // Use the retrieved token for authorization
@@ -181,11 +181,11 @@ export const fetchDebtors = async () => {
         if (response.status === 200) {
             return response.data; // Return the fetched data directly if the request is successful
         } else {
-            throw new Error(`Failed to fetch farmers data: Status code ${response.status}`); // Provide detailed error info
+            throw new Error(`Failed to fetch debtors data: Status code ${response.status}`); // Provide detailed error info
         }
     } catch (error) {
-        console.error("Error fetching farmers data:", error); // Log the error for debugging
-        throw new Error("Failed to fetch farmers data due to network or server error."); // Provide user-friendly error message
+        console.error("Error fetching debtors data:", error); // Log the error for debugging
+        throw new Error("Failed to fetch debtors data due to network or server error."); // Provide user-friendly error message
     }
 };
 
@@ -198,7 +198,7 @@ export const fetchMonthlyData = async () => {
     }
 
     try {
-        // Make an HTTP GET request to fetch all farmers data
+        // Make an HTTP GET request to fetch all monthly data
         const response = await Axios.get(`${BASE_URL}/api/monthly_chart/`, {
             headers: {
                 Authorization: `Bearer ${token}`, // Use the retrieved token for authorization
@@ -208,11 +208,38 @@ export const fetchMonthlyData = async () => {
         if (response.status === 200) {
             return response.data; // Return the fetched data directly if the request is successful
         } else {
-            throw new Error(`Failed to fetch farmers data: Status code ${response.status}`); // Provide detailed error info
+            throw new Error(`Failed to fetch monthly data: Status code ${response.status}`); // Provide detailed error info
         }
     } catch (error) {
-        console.error("Error fetching farmers data:", error); // Log the error for debugging
-        throw new Error("Failed to fetch farmers data due to network or server error."); // Provide user-friendly error message
+        console.error("Error fetching monthly data:", error); // Log the error for debugging
+        throw new Error("Failed to fetch monthly data due to network or server error."); // Provide user-friendly error message
+    }
+};
+
+export const fetchCustomerRegion = async () => {
+    const token = await AsyncStorage.getItem(TOKEN_KEY); // Retrieve the token
+
+    if (!token) {
+        console.error("No access token available."); // Log and handle cases where no token is found
+        throw new Error("Authentication token is not available.");
+    }
+
+    try {
+        // Make an HTTP GET request to fetch all customers data
+        const response = await Axios.get(`${BASE_URL}/api/customers_region/`, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Use the retrieved token for authorization
+            },
+        });
+
+        if (response.status === 200) {
+            return response.data; // Return the fetched data directly if the request is successful
+        } else {
+            throw new Error(`Failed to fetch customers data: Status code ${response.status}`); // Provide detailed error info
+        }
+    } catch (error) {
+        console.error("Error fetching customers data:", error); // Log the error for debugging
+        throw new Error("Failed to fetch customers data due to network or server error."); // Provide user-friendly error message
     }
 };
 
