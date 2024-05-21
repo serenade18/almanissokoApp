@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
       elevation: 5, // Shadow for Android
       marginTop: 5,
       marginBottom: 20,
-      height: screenHeight * 0.425,
+      height: screenHeight * 0.385,
     },
     titleContainer: {
         flexDirection: 'row',
