@@ -7,7 +7,7 @@ import ContinueButton from '../components/CustomButton';
 
 export default function App() {
     return (
-        <SafeAreaView>
+        <SafeAreaView className="bg-primary h-full">
             <ScrollView contentContainerStyle={{ height: '100%' }}>
             <View className="w-full flex justify-center items-center h-full px-4">
                 <Image
@@ -24,9 +24,9 @@ export default function App() {
 
                 <View className="relative mt-5">
                     <Text className="text-3xl text-white font-bold text-center">
-                    Cleaning Services at{"\n"}
-                    Your Doorsteps with{" "}
-                    <Text className="text-secondary-200">Paramax</Text>
+                    Almanis 
+                    {" "}
+                    <Text className="text-secondary-200">Soko</Text>
                     </Text>
 
                     <Image

@@ -49,11 +49,11 @@ export default function Login() {
             <Image
               source={images.logo}
               resizeMode="contain"
-              className="w-[115px] h-[34px]"
+              className="w-[130px] h-[134px]"
             />
 
             <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-              Log in to Paramax
+              Log in to Almanis Soko
             </Text>
 
             <FormField
@@ -80,13 +80,13 @@ export default function Login() {
 
             <View className="flex justify-center pt-5 flex-row gap-2">
               <Text className="text-lg text-gray-100 font-pregular">
-                Don't have an account?
+                Forgot Password?
               </Text>
               <Link
-                href="/signup"
+                href="/resetpassword"
                 className="text-lg font-psemibold text-secondary"
               >
-                Signup
+                Reset
               </Link>
             </View>
           </View>
