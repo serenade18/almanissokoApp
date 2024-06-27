@@ -246,7 +246,7 @@ const NewOdersModal = ({ hideModal }) => {
                         <Picker
                             selectedValue={transporters}
                             onValueChange={(itemValue) => setTransporters(itemValue)}
-                            style={{ backgroundColor: '#333', color: '#fff', borderRadius: 25 }}
+                            style={{ color: '#fff' }}
                         >
                             <Picker.Item label="Select Tranporter" value="" />
                             <Picker.Item label="Others" value="1" />
@@ -294,7 +294,7 @@ const NewOdersModal = ({ hideModal }) => {
                         <Picker
                             selectedValue={farmer_id}
                             onValueChange={(itemValue) => setFarmerId(itemValue)}
-                            style={{ backgroundColor: '#333', color: '#fff', borderRadius: 25 }}
+                            style={{ color: '#fff' }}
                         >
                             <Picker.Item label="Select Farmer" value="" />
                             {farmers.map((farmer) => (
@@ -312,7 +312,7 @@ const NewOdersModal = ({ hideModal }) => {
                         <Picker
                             selectedValue={rice_type}
                             onValueChange={(itemValue) => setRiceType(itemValue)}
-                            style={{ backgroundColor: '#333', color: '#fff', borderRadius: 25 }}
+                            style={{ color: '#fff' }}
                         >
                             <Picker.Item label="Select Rice Type" value="" />
                             <Picker.Item label="Pishori" value="1" />
@@ -330,7 +330,7 @@ const NewOdersModal = ({ hideModal }) => {
                         <Picker
                             selectedValue={vat}
                             onValueChange={(itemValue) => setVat(itemValue)}
-                            style={{ backgroundColor: '#333', color: '#fff', borderRadius: 25 }}
+                            style={{ color: '#fff' }}
                         >
                             <Picker.Item label="Select V.A.T" value="" />
                             <Picker.Item label="0%" value="0" />

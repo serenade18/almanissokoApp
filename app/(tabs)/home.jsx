@@ -30,34 +30,31 @@ export default function Home() {
     { title: 'Farmers', value: '0', change: '' },
   ];
 
-//   const handleCardPress = (title) => {
-//     if (title === 'New Orders') {
-//       setShowOrderModal(true); // Show modal when "New Orders" is pressed
-//     }
-//     if (title === 'New Payments') {
-//         setShowPaymentModal(true); // Show modal when "New Orders" is pressed
-//     }
-//     if (title === 'New Customers') {
-//         setShowCustomerModal(true); // Show modal when "New Orders" is pressed
-//     }
-//     if (title === 'New Farmer') {
-//         setShowFarmerModal(true); // Show modal when "New Orders" is pressed
-//     }
-//   };
-
     const handleCardPress = (title) => {
         switch (title) {
             case 'New Orders':
                 setShowOrderModal(true);
                 break;
+            case 'Orders':
+                router.push('/(tabs)/order/orders'); // Navigate to the orders screen
+                break;
             case 'New Payments':
                 setShowPaymentModal(true);
+                break;
+            case 'Payments':
+                router.push('/(tabs)/payment/payments'); // Navigate to the payments screen
                 break;
             case 'New Customers':
                 setShowCustomerModal(true);
                 break;
+            case 'Customers':
+                router.push('/(tabs)/customer/customers'); // Navigate to the customers screen
+                break;
             case 'New Farmer':
                 setShowFarmerModal(true);
+                break;
+            case 'Farmers':
+                router.push('/(tabs)/farmer/farmers'); // Navigate to the farmer screen
                 break;
             default:
                 break;
