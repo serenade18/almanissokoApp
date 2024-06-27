@@ -37,7 +37,7 @@ export default function App() {
                 </View>
 
                 <Text className="text-sm font-pregular text-gray-100 mt-7 text-center">
-                    Where Cleannes Meets Innovation: We understand that a clean house  gives us all a wonderful feeling
+                    Manage all your sales in one place
                 </Text>
 
                 <ContinueButton

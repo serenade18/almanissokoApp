@@ -84,7 +84,8 @@ const TabsLayout = () => {
             )
           }}
         />
-          <Tabs.Screen
+
+        <Tabs.Screen
           name="profile"
           listeners={({ navigation }) => ({
             tabPress: event => {
@@ -103,6 +104,38 @@ const TabsLayout = () => {
                 focused={focused}
               />
             ),
+          }}
+        />
+        <Tabs.Screen
+          name="order/orders"
+          options={{
+            title: 'Orders',
+            headerShown: false,
+            tabBarButton: () => null, 
+          }}
+        />
+        <Tabs.Screen
+          name="payment/payments"
+          options={{
+            title: 'Payments',
+            headerShown: false,
+            tabBarButton: () => null, 
+          }}
+        />
+        <Tabs.Screen
+          name="customer/customers"
+          options={{
+            title: 'Customers',
+            headerShown: false,
+            tabBarButton: () => null, 
+          }}
+        />
+        <Tabs.Screen
+          name="farmer/farmers"
+          options={{
+            title: 'Farmers',
+            headerShown: false,
+            tabBarButton: () => null, 
           }}
         />
       </Tabs>

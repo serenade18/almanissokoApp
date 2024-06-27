@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const Card = ({ title, value, downloads, change, color }) => {
+const Card = ({ title, value, onPress, change, color }) => {
   return (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={onPress}>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.value}>{value}</Text>
 
@@ -31,9 +31,10 @@ const styles = StyleSheet.create({
     fontSize: 26,
     color: '#fff',
     marginBottom: 18,
+    fontWeight: '900'
   },
   value: {
-    fontSize: 16,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
     marginBottom: 24,
