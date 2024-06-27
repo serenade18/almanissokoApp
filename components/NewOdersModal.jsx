@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Image, FlatList, TextInput, ScrollView, A
 import React, { useState, useEffect } from 'react';
 import { icons } from '../constants';;
 import { KeyboardAvoidingView } from 'react-native';
-import { bookNow, fetchCustomerByName } from '../lib/actions';
+import { bookNow, fetchCustomerByName, fetchFarmerOnly } from '../lib/actions';
 import { Picker } from '@react-native-picker/picker';
 
 const NewOdersModal = ({ hideModal }) => {
@@ -25,7 +25,7 @@ const NewOdersModal = ({ hideModal }) => {
     const [price, setPrice] = useState('');
     const [amount, setAmount] = useState('');
     const [customers, setCustomers] = useState([]);
-    const [isSearching, setIsSearching] = useState(false);
+    const [farmers, setFarmers] = useState([]);
 
     useEffect(() => {
         const numberOfKilosFloat = parseFloat(kgs);
@@ -57,6 +57,20 @@ const NewOdersModal = ({ hideModal }) => {
         }
     };
 
+    useEffect(() => {
+        const fetchInitialData = async () => {
+            try {
+                const farmersList = await fetchFarmerOnly(); // Implement fetchFarmers function to get list of farmers
+                setFarmers(farmersList);
+            } catch (error) {
+                console.error('Error fetching farmers:', error);
+                Alert.alert('Error', 'Failed to fetch farmer details.');
+            }
+        };
+
+        fetchInitialData();
+    }, []);
+
     const handleCustomerSelect = (customer) => {
         setName(customer.name);
         setCustomerId(customer.id);
@@ -66,24 +80,26 @@ const NewOdersModal = ({ hideModal }) => {
 
     const handleBooking = async () => {
         if (
-            !name || !phone || !customer_id || !town || !kgs || !packaging || !discount || !transport || 
+            !name || !phone || !town || !kgs || !packaging || !discount || !transport || 
             !transporters || !rider || !comment || !farmer_id || !rice_type || !vat || !farmer_price || 
             !price || !amount
         ) {
             Alert.alert('Error', 'All fields are required.');
             return;
         }
-
+       
         try {
             const response = await bookNow(name, phone, customer_id, town, kgs, packaging, discount, transport, transporters, rider, comment, farmer_id, rice_type, vat, farmer_price, price, amount);
             console.log("response", response)
-            Alert.alert('Success', 'Booking confirmed');
+            Alert.alert('Success', 'Order Placed Succesfully');
             hideModal();
         } catch (error) {
             Alert.alert('Error', 'Failed to book the Order.');
             console.error('Booking error:', error.message);
         }
     };
+
+    console.log('Transporters:', transporters);
 
     return (
         <ScrollView>
@@ -142,21 +158,6 @@ const NewOdersModal = ({ hideModal }) => {
                         placeholderTextColor="#888"
                         value={name}
                         onChangeText={setName}
-                        style={{ padding: 10 }}
-                    />
-                </View>
-                <View>
-                    <Text className="font-pmedium text-xl mt-0 text-white p-4">
-                        Customer No:
-                    </Text>
-                </View>
-                <View className="pl-4 pr-4">
-                    <TextInput
-                        className="bg-black-200 border-2 text-white border-secondary-200 rounded-2xl"
-                        placeholder='Customer No'
-                        placeholderTextColor="#888"
-                        value={customer_id}
-                        onChangeText={setCustomerId} // Ensure onChangeText is correctly updating customer_id
                         style={{ padding: 10 }}
                     />
                 </View>
@@ -289,14 +290,18 @@ const NewOdersModal = ({ hideModal }) => {
                     </Text>
                 </View>
                 <View className="pl-4 pr-4">
-                    <TextInput
-                        className="bg-black-200 border-2 text-white border-secondary-200 rounded-2xl"
-                        placeholder='Farmer'
-                        placeholderTextColor="#888"
-                        value={farmer_id}
-                        onChangeText={setFarmerId}
-                        style={{ padding: 10 }}
-                    />
+                    <View className="bg-black-200 border-2 text-white border-secondary-200 rounded-2xl">
+                        <Picker
+                            selectedValue={farmer_id}
+                            onValueChange={(itemValue) => setFarmerId(itemValue)}
+                            style={{ backgroundColor: '#333', color: '#fff', borderRadius: 25 }}
+                        >
+                            <Picker.Item label="Select Farmer" value="" />
+                            {farmers.map((farmer) => (
+                                <Picker.Item key={farmer.id} label={farmer.name} value={farmer.id.toString()} />
+                            ))}
+                        </Picker>
+                    </View>
                 </View>
                 
                 <View>
