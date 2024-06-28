@@ -23,11 +23,10 @@ const Customers = () => {
     return () => clearInterval(interval); // Cleanup
   }, []);
 
-
   const fetchData = async () => {
     try {
       const response = await fetchAllCustomer();
-      console.log("CUstomers", response.data.results)
+      // console.log("CUstomers", response.data.results)
       if (response.error === false) {
         setCustomers(response.data.results);
       } else {
@@ -71,7 +70,6 @@ const Customers = () => {
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={{ paddingBottom: 16 }}
         pagingEnabled={true}
-        showsHorizontalScrollIndicator={false}
       />
     </SafeAreaView>
   );

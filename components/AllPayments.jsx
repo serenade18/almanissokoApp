@@ -3,34 +3,34 @@ import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-nati
 
 import { Entypo, FontAwesome5, FontAwesome } from '@expo/vector-icons';
 
-const AllCustomers = ({ customer }) => {
+const AllPayments = ({ payment }) => {
 
     // Region ID to name mapping
-    const regionNames = {
-        1: "NAIROBI",
-        2: "NYANZA",
-        3: "CENTRAL",
-        4: "COAST",
-        5: "EASTERN",
-        6: "NORTH EASTERN",
-        7: "WESTERN",
-        8: "RIFT VALLEY"
+    const paymentModes = {
+        1: "Cash",
+        2: "Mpesa",
+        3: "Bank",
+        4: "Barter Trade",
+        5: "Promotion",
+        6: "Compensation",
+        7: "Top Up"
     };
     
     return (
         
         <View style={styles.tableRow}>
-            <Text style={styles.tableCellNarrow}>{customer.id}</Text>
-            <Text style={styles.tableCellName}>{customer.name}</Text>
-            <Text style={styles.tableCellPhone}>{customer.phone}</Text>
-            <Text style={styles.tableCellTown}>{customer.town}</Text>
-            <Text style={styles.tableCellNarrow}>{regionNames[customer.region] || "Unknown"}</Text>
+            <Text style={styles.tableCellNarrow}>{payment.id}</Text>
+            <Text style={styles.tableCellNarrow}>{payment.orders_id}</Text>
+            <Text style={styles.tableCellName}>{payment.customer.name}</Text>
+            <Text style={styles.tableCellPhone}>{payment.amount}</Text>
+            <Text style={styles.tableCellNarrow}>{paymentModes[payment.payment_mode] || "Unknown"}</Text>
+            <Text style={styles.tableCellTown}>{payment.payment}</Text>
             <Text style={styles.tableCellDate}>
-            {new Date(customer.added_on).toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric'
-            })} at {new Date(customer.added_on).toLocaleTimeString()}
+                {new Date(payment.added_on).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                })} at {new Date(payment.added_on).toLocaleTimeString()}
             </Text>
             <TouchableOpacity style={styles.tableCellNarrow}>
             <FontAwesome5 name="user-edit" size={19} color="green" />
@@ -150,4 +150,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default AllCustomers;
+export default AllPayments;

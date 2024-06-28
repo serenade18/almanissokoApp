@@ -3,7 +3,7 @@ import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-nati
 
 import { Entypo, FontAwesome5, FontAwesome } from '@expo/vector-icons';
 
-const AllCustomers = ({ customer }) => {
+const AllOrders = ({ order }) => {
 
     // Region ID to name mapping
     const regionNames = {
@@ -20,17 +20,21 @@ const AllCustomers = ({ customer }) => {
     return (
         
         <View style={styles.tableRow}>
-            <Text style={styles.tableCellNarrow}>{customer.id}</Text>
-            <Text style={styles.tableCellName}>{customer.name}</Text>
-            <Text style={styles.tableCellPhone}>{customer.phone}</Text>
-            <Text style={styles.tableCellTown}>{customer.town}</Text>
-            <Text style={styles.tableCellNarrow}>{regionNames[customer.region] || "Unknown"}</Text>
+            <Text style={styles.tableCellNarrow}>{order.id}</Text>
+            <Text style={styles.tableCellName}>{order.name}</Text>
+            <Text style={styles.tableCellTown}>{order.town}</Text>
+            <Text style={styles.tableCellNarrow}>{order.kgs}</Text>
+            <Text style={styles.tableCellNarrow}>{order.discount}</Text>
+            <Text style={styles.tableCellNarrow}>{order.packaging}</Text>
+            <Text style={styles.tableCellNarrow}>{order.transport}</Text>
+            <Text style={styles.tableCellPhone}>{order.farmer.name}</Text>
+            <Text style={styles.tableCellPhone}>{order.amount}</Text>
             <Text style={styles.tableCellDate}>
-            {new Date(customer.added_on).toLocaleDateString('en-US', {
+            {new Date(order.added_on).toLocaleDateString('en-US', {
                 month: 'short',
                 day: 'numeric',
                 year: 'numeric'
-            })} at {new Date(customer.added_on).toLocaleTimeString()}
+            })} at {new Date(order.added_on).toLocaleTimeString()}
             </Text>
             <TouchableOpacity style={styles.tableCellNarrow}>
             <FontAwesome5 name="user-edit" size={19} color="green" />
@@ -131,7 +135,6 @@ const styles = StyleSheet.create({
       fontSize: 16,
       paddingLeft: 16,
       fontWeight: 'bold', 
-      color: 'white'
     },
     tableCellNarrow: {
       minWidth: 40, // Minimum width for narrower cells
@@ -150,4 +153,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default AllCustomers;
+export default AllOrders;

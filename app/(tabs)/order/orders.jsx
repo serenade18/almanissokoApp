@@ -5,10 +5,38 @@ import { useAuth } from '../../../lib/authProvider';
 import { useRouter } from 'expo-router';
 import { images } from '../../../constants';
 import SearchInput from '../../../components/SearchInput';
+import { fetchAllOrders } from '../../../lib/actions';
+import AllOrders from '../../../components/AllOrders';
 
 const Orders = () => {
   const { user } = useAuth(); // Access user from the authentication context
   const router = useRouter();
+
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    fetchData(); // Initial fetch
+    const interval = setInterval(() => {
+      fetchData(); // Fetch every 15 seconds
+    }, 10000);
+
+    return () => clearInterval(interval); // Cleanup
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetchAllOrders();
+      // console.log("Orders", response.data.results)
+      if (response.error === false) {
+        setOrders(response.data.results);
+      } else {
+        console.error('Failed to fetch orders:', response.message);
+      }
+    } catch (error) {
+      console.error('Error fetching order data:', error);
+    }
+  };
+  
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList
@@ -36,6 +64,12 @@ const Orders = () => {
             </View>
           </View>
         )}
+        stickyHeaderIndices={[0]}
+        data={orders}
+        renderItem={({ item }) => <AllOrders order={item} />}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={{ paddingBottom: 16 }}
+        pagingEnabled={true}
       />
     </SafeAreaView>
   )

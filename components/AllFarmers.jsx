@@ -3,34 +3,20 @@ import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-nati
 
 import { Entypo, FontAwesome5, FontAwesome } from '@expo/vector-icons';
 
-const AllCustomers = ({ customer }) => {
-
-    // Region ID to name mapping
-    const regionNames = {
-        1: "NAIROBI",
-        2: "NYANZA",
-        3: "CENTRAL",
-        4: "COAST",
-        5: "EASTERN",
-        6: "NORTH EASTERN",
-        7: "WESTERN",
-        8: "RIFT VALLEY"
-    };
+const AllFarmers = ({ farmer }) => {
     
     return (
         
         <View style={styles.tableRow}>
-            <Text style={styles.tableCellNarrow}>{customer.id}</Text>
-            <Text style={styles.tableCellName}>{customer.name}</Text>
-            <Text style={styles.tableCellPhone}>{customer.phone}</Text>
-            <Text style={styles.tableCellTown}>{customer.town}</Text>
-            <Text style={styles.tableCellNarrow}>{regionNames[customer.region] || "Unknown"}</Text>
+            <Text style={styles.tableCellNarrow}>{farmer.id}</Text>
+            <Text style={styles.tableCellName}>{farmer.name}</Text>
+            <Text style={styles.tableCellName}>{farmer.phone}</Text>
             <Text style={styles.tableCellDate}>
-            {new Date(customer.added_on).toLocaleDateString('en-US', {
+            {new Date(farmer.added_on).toLocaleDateString('en-US', {
                 month: 'short',
                 day: 'numeric',
                 year: 'numeric'
-            })} at {new Date(customer.added_on).toLocaleTimeString()}
+            })} at {new Date(farmer.added_on).toLocaleTimeString()}
             </Text>
             <TouchableOpacity style={styles.tableCellNarrow}>
             <FontAwesome5 name="user-edit" size={19} color="green" />
@@ -150,4 +136,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default AllCustomers;
+export default AllFarmers;
