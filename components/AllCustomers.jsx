@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-
-import { Entypo, FontAwesome5, FontAwesome } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 const AllCustomers = ({ customer }) => {
+  const router = useRouter();
 
     // Region ID to name mapping
     const regionNames = {
@@ -18,22 +18,24 @@ const AllCustomers = ({ customer }) => {
     };
     
     return (
-        
-        <View style={styles.tableRow}>
-            <Text style={styles.tableCellNarrow}>{customer.id}</Text>
-            <Text style={styles.tableCellName}>{customer.name}</Text>
-            <Text style={styles.tableCellPhone}>{customer.phone}</Text>
-            <Text style={styles.tableCellTown}>{customer.town}</Text>
-            <Text style={styles.tableCellNarrow}>{regionNames[customer.region] || "Unknown"}</Text>
-            <Text style={styles.tableCellDate}>
-            {new Date(customer.added_on).toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric'
-            })} 
-            </Text>
-        
-        </View>
+        <TouchableOpacity
+          onPress={() => router.push({ pathname: 'customer/customerdetails', params: { id: customer.id } })}
+        >
+          <View style={styles.tableRow}>
+              <Text style={styles.tableCellNarrow}>{customer.id}</Text>
+              <Text style={styles.tableCellName}>{customer.name}</Text>
+              <Text style={styles.tableCellPhone}>{customer.phone}</Text>
+              <Text style={styles.tableCellTown}>{customer.town}</Text>
+              <Text style={styles.tableCellNarrow}>{regionNames[customer.region] || "Unknown"}</Text>
+              <Text style={styles.tableCellDate}>
+              {new Date(customer.added_on).toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                  year: 'numeric'
+              })} 
+              </Text>
+          </View>
+        </TouchableOpacity>
     );
 };
 

@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-
+import { useRouter } from 'expo-router';
 import { Entypo, FontAwesome5, FontAwesome } from '@expo/vector-icons';
 
 const AllOrders = ({ order }) => {
+  const router = useRouter();
 
     // Region ID to name mapping
     const regionNames = {
@@ -18,7 +19,9 @@ const AllOrders = ({ order }) => {
     };
     
     return (
-        
+      <TouchableOpacity
+      onPress={() => router.push({ pathname: 'order/orderdetails', params: { id: order.id } })}
+      >
         <View style={styles.tableRow}>
             <Text style={styles.tableCellNarrow}>{order.id}</Text>
             <Text style={styles.tableCellName}>{order.name}</Text>
@@ -38,6 +41,7 @@ const AllOrders = ({ order }) => {
             </Text>
         
         </View>
+      </TouchableOpacity>  
     );
 };
 

@@ -1,12 +1,15 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-
+import { useRouter } from 'expo-router';
 import { Entypo, FontAwesome5, FontAwesome } from '@expo/vector-icons';
 
 const AllFarmers = ({ farmer }) => {
+  const router = useRouter();
     
     return (
-        
+      <TouchableOpacity
+        onPress={() => router.push({ pathname: 'farmer/farmerdetails', params: { id: farmer.id } })}
+      >
         <View style={styles.tableRow}>
             <Text style={styles.tableCellNarrow}>{farmer.id}</Text>
             <Text style={styles.tableCellName}>{farmer.name}</Text>
@@ -20,6 +23,7 @@ const AllFarmers = ({ farmer }) => {
             </Text>
         
         </View>
+      </TouchableOpacity>    
     );
 };
 

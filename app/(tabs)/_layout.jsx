@@ -115,7 +115,23 @@ const TabsLayout = () => {
           }}
         />
         <Tabs.Screen
+          name="order/orderdetails"
+          options={{
+            title: 'Orders',
+            headerShown: false,
+            tabBarButton: () => null, 
+          }}
+        />
+        <Tabs.Screen
           name="payment/payments"
+          options={{
+            title: 'Payments',
+            headerShown: false,
+            tabBarButton: () => null, 
+          }}
+        />
+        <Tabs.Screen
+          name="payment/paymentdetails"
           options={{
             title: 'Payments',
             headerShown: false,
@@ -131,7 +147,23 @@ const TabsLayout = () => {
           }}
         />
         <Tabs.Screen
+          name="customer/customerdetails"
+          options={{
+            title: 'Customers',
+            headerShown: false,
+            tabBarButton: () => null, 
+          }}
+        />
+        <Tabs.Screen
           name="farmer/farmers"
+          options={{
+            title: 'Farmers',
+            headerShown: false,
+            tabBarButton: () => null, 
+          }}
+        />
+        <Tabs.Screen
+          name="farmer/farmerdetails"
           options={{
             title: 'Farmers',
             headerShown: false,

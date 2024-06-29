@@ -76,6 +76,7 @@ const NewPaymentModal = ({ hideModal }) => {
                         </TouchableOpacity>
                     </View>
                 </View>
+
                 <View>
                     <Text className="font-pmedium text-xl mt-2 text-white p-4">
                         Order Number:
@@ -129,8 +130,7 @@ const NewPaymentModal = ({ hideModal }) => {
                         onChangeText={setPayingNumber}
                         style={{ padding: 10 }}
                     />
-                </View>
-                
+                </View>   
                 <View>
                     <Text className="font-pmedium text-xl mt-0 text-white p-4">
                         Payment Mode:

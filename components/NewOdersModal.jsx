@@ -5,7 +5,7 @@ import { KeyboardAvoidingView } from 'react-native';
 import { bookNow, fetchCustomerByName, fetchFarmerOnly } from '../lib/actions';
 import { Picker } from '@react-native-picker/picker';
 import { StatusBar } from 'expo-status-bar';
-
+ 
 const NewOdersModal = ({ hideModal }) => {
 
     const [name, setName] = useState('');
@@ -46,18 +46,6 @@ const NewOdersModal = ({ hideModal }) => {
             setAmount('');
         }
     }, [kgs, price, discount, vat, rider, packaging, transport]);
-
-    // const handlePhoneChange = async (newPhone) => {
-    //     setPhone(newPhone);
-
-    //     try {
-    //         const customersList = await fetchCustomerByName(newPhone);
-    //         setCustomers(customersList);
-    //     } catch (error) {
-    //         console.error('Error fetching customers:', error);
-    //         Alert.alert('Error', 'Failed to fetch customer details.');
-    //     }
-    // };
 
     const handlePhoneChange = async (newPhone) => {
         setPhone(newPhone);
@@ -420,6 +408,7 @@ const NewOdersModal = ({ hideModal }) => {
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>
+            <StatusBar backgroundColor="#161622" style="light" />
         </ScrollView>
     )
     
