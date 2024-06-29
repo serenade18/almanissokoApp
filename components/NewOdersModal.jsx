@@ -27,6 +27,7 @@ const NewOdersModal = ({ hideModal }) => {
     const [amount, setAmount] = useState('');
     const [customers, setCustomers] = useState([]);
     const [farmers, setFarmers] = useState([]);
+    const [customerNotFound, setCustomerNotFound] = useState(false);
 
     useEffect(() => {
         const numberOfKilosFloat = parseFloat(kgs);
@@ -46,15 +47,32 @@ const NewOdersModal = ({ hideModal }) => {
         }
     }, [kgs, price, discount, vat, rider, packaging, transport]);
 
+    // const handlePhoneChange = async (newPhone) => {
+    //     setPhone(newPhone);
+
+    //     try {
+    //         const customersList = await fetchCustomerByName(newPhone);
+    //         setCustomers(customersList);
+    //     } catch (error) {
+    //         console.error('Error fetching customers:', error);
+    //         Alert.alert('Error', 'Failed to fetch customer details.');
+    //     }
+    // };
+
     const handlePhoneChange = async (newPhone) => {
         setPhone(newPhone);
 
         try {
             const customersList = await fetchCustomerByName(newPhone);
+            if (customersList.length === 0) {
+                setCustomerNotFound(true);
+            } else {
+                setCustomerNotFound(false);
+            }
             setCustomers(customersList);
         } catch (error) {
-            console.error('Error fetching customers:', error);
-            Alert.alert('Error', 'Failed to fetch customer details.');
+            // console.error('Error fetching customers:', error);
+            // Alert.alert('Error', 'Please Check your Network Connection.');
         }
     };
 
@@ -136,6 +154,14 @@ const NewOdersModal = ({ hideModal }) => {
                         onChangeText={handlePhoneChange}
                         style={{ padding: 10 }}
                     />
+
+                    {customerNotFound && (
+                        <View className="bg-black-200 border-2 text-white border-secondary-200 rounded-2xl mt-2">
+                            <Text className="text-red-500  p-2">
+                                Customer doesn't exist
+                            </Text>
+                        </View>
+                    )}
                     {customers.length > 0 && (
                         <View className="bg-black-200 border-2 text-white border-secondary-200 rounded-2xl mt-2">
                             {customers.map((customer, index) => (
@@ -400,5 +426,3 @@ const NewOdersModal = ({ hideModal }) => {
 }
 
 export default NewOdersModal
-
-
