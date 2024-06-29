@@ -42,7 +42,7 @@ const AppContent = () => {
   const { user, loading } = useAuth();
   const router = useRouter();
 
-  console.log("user", user)
+  // console.log("user", user)
 
   useEffect(() => {
     if (!loading && user) {

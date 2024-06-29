@@ -18,12 +18,6 @@ const AllFarmers = ({ farmer }) => {
                 year: 'numeric'
             })} at {new Date(farmer.added_on).toLocaleTimeString()}
             </Text>
-            <TouchableOpacity style={styles.tableCellNarrow}>
-            <FontAwesome5 name="user-edit" size={19} color="green" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.tableCellNarrow}>
-            <FontAwesome name="user-times" size={21} color="red" />
-            </TouchableOpacity>
         
         </View>
     );
@@ -103,19 +97,11 @@ const styles = StyleSheet.create({
       fontWeight: 'bold', 
       color: 'white'
     },
-    tableCellRegion: {
-      width: 100, // Minimum width for narrower cells
-      textAlign: 'left',
-      fontSize: 16,
-      padding: 10,
-      fontWeight: 'bold', 
-      color: 'white'
-    },
     tableCellDate: {
       minWidth: 160, // Ensure minimum width for readability
       textAlign: 'left',
       fontSize: 16,
-      paddingLeft: 16,
+      padding: 6,
       fontWeight: 'bold', 
       color: 'white'
     },
@@ -126,13 +112,6 @@ const styles = StyleSheet.create({
       fontWeight: 'bold', 
       padding: 6,
       color: 'white'
-    },
-    renderText: {
-      fontSize: 16,
-      fontWeight: 'bold',
-      padding: 6,
-      alignItems: 'center',
-      marginTop: -2
     }
   });
 

@@ -30,14 +30,8 @@ const AllCustomers = ({ customer }) => {
                 month: 'short',
                 day: 'numeric',
                 year: 'numeric'
-            })} at {new Date(customer.added_on).toLocaleTimeString()}
+            })} 
             </Text>
-            <TouchableOpacity style={styles.tableCellNarrow}>
-            <FontAwesome5 name="user-edit" size={19} color="green" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.tableCellNarrow}>
-            <FontAwesome name="user-times" size={21} color="red" />
-            </TouchableOpacity>
         
         </View>
     );
@@ -118,10 +112,10 @@ const styles = StyleSheet.create({
       color: 'white'
     },
     tableCellRegion: {
-      width: 100, // Minimum width for narrower cells
+      width: 120, // Minimum width for narrower cells
       textAlign: 'left',
       fontSize: 16,
-      padding: 10,
+      padding: 6,
       fontWeight: 'bold', 
       color: 'white'
     },
@@ -129,7 +123,7 @@ const styles = StyleSheet.create({
       minWidth: 160, // Ensure minimum width for readability
       textAlign: 'left',
       fontSize: 16,
-      paddingLeft: 16,
+      padding: 6,
       fontWeight: 'bold', 
       color: 'white'
     },

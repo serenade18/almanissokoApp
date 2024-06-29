@@ -36,12 +36,6 @@ const AllOrders = ({ order }) => {
                 year: 'numeric'
             })} at {new Date(order.added_on).toLocaleTimeString()}
             </Text>
-            <TouchableOpacity style={styles.tableCellNarrow}>
-            <FontAwesome5 name="user-edit" size={19} color="green" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.tableCellNarrow}>
-            <FontAwesome name="user-times" size={21} color="red" />
-            </TouchableOpacity>
         
         </View>
     );
@@ -130,11 +124,12 @@ const styles = StyleSheet.create({
       color: 'white'
     },
     tableCellDate: {
-      minWidth: 160, // Ensure minimum width for readability
-      textAlign: 'left',
+      minWidth: 120, // Ensure minimum width for readability
+      textAlign: 'center',
       fontSize: 16,
-      paddingLeft: 16,
+      padding: 6,
       fontWeight: 'bold', 
+      color: 'white'
     },
     tableCellNarrow: {
       minWidth: 40, // Minimum width for narrower cells

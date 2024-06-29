@@ -4,6 +4,7 @@ import { icons } from '../constants';
 import { Picker } from '@react-native-picker/picker'
 import { KeyboardAvoidingView } from 'react-native';
 import { saveCustomer } from '../lib/actions';
+import { StatusBar } from 'expo-status-bar';
 
 const NewCustomerModal = ({ hideModal,  }) => {
     const [phone, setPhone] = useState('');

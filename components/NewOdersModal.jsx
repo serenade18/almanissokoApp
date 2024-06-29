@@ -4,6 +4,7 @@ import { icons } from '../constants';;
 import { KeyboardAvoidingView } from 'react-native';
 import { bookNow, fetchCustomerByName, fetchFarmerOnly } from '../lib/actions';
 import { Picker } from '@react-native-picker/picker';
+import { StatusBar } from 'expo-status-bar';
 
 const NewOdersModal = ({ hideModal }) => {
 

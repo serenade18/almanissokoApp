@@ -1,5 +1,6 @@
 import { router } from "expo-router";
 import { View, Text, Image } from "react-native";
+import { StatusBar } from 'expo-status-bar';
 
 import { images } from "../constants";
 import CustomButton from "./CustomButton";

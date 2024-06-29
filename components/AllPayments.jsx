@@ -24,7 +24,7 @@ const AllPayments = ({ payment }) => {
             <Text style={styles.tableCellName}>{payment.customer.name}</Text>
             <Text style={styles.tableCellPhone}>{payment.amount}</Text>
             <Text style={styles.tableCellNarrow}>{paymentModes[payment.payment_mode] || "Unknown"}</Text>
-            <Text style={styles.tableCellTown}>{payment.payment}</Text>
+            <Text style={styles.tableCellPayment}>{payment.payment}</Text>
             <Text style={styles.tableCellDate}>
                 {new Date(payment.added_on).toLocaleDateString('en-US', {
                     month: 'short',
@@ -32,12 +32,6 @@ const AllPayments = ({ payment }) => {
                     year: 'numeric'
                 })} at {new Date(payment.added_on).toLocaleTimeString()}
             </Text>
-            <TouchableOpacity style={styles.tableCellNarrow}>
-            <FontAwesome5 name="user-edit" size={19} color="green" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.tableCellNarrow}>
-            <FontAwesome name="user-times" size={21} color="red" />
-            </TouchableOpacity>
         
         </View>
     );
@@ -109,11 +103,12 @@ const styles = StyleSheet.create({
       fontWeight: 'bold', 
       color: 'white'
     },
-    tableCellTown: {
+    tableCellPayment: {
       width: 120, // Minimum width for narrower cells
-      textAlign: 'left',
+      textAlign: 'center',
       fontSize: 16,
       padding: 6,
+      marginLeft: 2,
       fontWeight: 'bold', 
       color: 'white'
     },
@@ -126,10 +121,10 @@ const styles = StyleSheet.create({
       color: 'white'
     },
     tableCellDate: {
-      minWidth: 160, // Ensure minimum width for readability
+      minWidth: 120, // Ensure minimum width for readability
       textAlign: 'left',
       fontSize: 16,
-      paddingLeft: 16,
+      padding: 6,
       fontWeight: 'bold', 
       color: 'white'
     },

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../../constants';
 import SearchInput from '../../components/SearchInput';
+import { StatusBar } from 'expo-status-bar';
 import { useAuth } from '../../lib/authProvider';
 import { useRouter } from 'expo-router';
 import Card from '../../components/Card'; // Make sure to import the Card component
@@ -10,6 +11,7 @@ import NewOdersModal from '../../components/NewOdersModal';
 import NewPaymentsModal from '../../components/NewPaymentModal';
 import NewCustomersModal from '../../components/NewCustomerModal';
 import NewFarmerModal from '../../components/NewFarmerModal';
+import { fetchHomePage } from '../../lib/actions';
 
 export default function Home() {
   const { user } = useAuth(); // Access user from the authentication context
@@ -18,16 +20,47 @@ export default function Home() {
   const [showPaymentModal, setShowPaymentModal] = useState(false); 
   const [showFarmerModal, setShowFarmerModal] = useState(false); 
   const [showCustomerModal, setShowCustomerModal] = useState(false); 
+  
+  const [farmers, setFarmer] = useState(0);
+  const [customers, setCustomers] = useState(0);
+  const [balance, setBalance] = useState(0);
+
+  useEffect(() => {
+    fetchData(); // Initial fetch
+    const interval = setInterval(() => {
+      fetchData(); // Fetch every 15 seconds
+    }, 10000);
+
+    return () => clearInterval(interval); // Cleanup
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetchHomePage();
+      // console.log("home api", response)
+      if (response.error === false) {
+        setCustomers(response.customer);
+        setFarmer(response.farmer);
+      } else {
+        console.error('Failed to fetch homepage:', response.message);
+      }
+    } catch (error) {
+      console.error('Error fetching homepage data:', error);
+    }
+  };
+  
+
+  // console.log('customer', customers)
 
   const data = [
     { title: 'New Orders', value: '0', change: '' },
     { title: 'Orders', value: '0', change: '' },
     { title: 'New Payments', value: '0', change: '' },
-    { title: 'Payments', value: '0', change: '' },
+    { title: 'Payments', value: '0', change: '-0' },
     { title: 'New Customers', value: '0', change: '' },
-    { title: 'Customers', value: '0', change: '' },
+    { title: 'Customers', value: customers, change: '' },
     { title: 'New Farmer', value: '0', change: '' },
-    { title: 'Farmers', value: '0', change: '' },
+    { title: 'Farmers', value: farmers, change: '' },
   ];
 
     const handleCardPress = (title) => {
@@ -138,6 +171,7 @@ export default function Home() {
       >
         <NewFarmerModal hideModal={() => setShowFarmerModal(false)} />
       </Modal>
+      <StatusBar backgroundColor="#161622" style="light" />
     </SafeAreaView>
   );
 }

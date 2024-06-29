@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../../../lib/authProvider';
 import { useRouter } from 'expo-router';
@@ -7,6 +7,7 @@ import { images } from '../../../constants';
 import SearchInput from '../../../components/SearchInput';
 import { fetchAllCustomer } from '../../../lib/actions';
 import AllCustomers from '../../../components/AllCustomers';
+import { StatusBar } from 'expo-status-bar';
 
 const Customers = () => {
   const { user } = useAuth(); // Access user from the authentication context
@@ -39,9 +40,9 @@ const Customers = () => {
 
   return (
     <SafeAreaView className="bg-primary h-full">
-      <FlatList
+    <FlatList
         ListHeaderComponent={() => (
-          <View className="flex my-6 px-4 space-y-6 bg-primary">
+          <View className="flex my-6 px-4 space-y-6">
             <View className="flex justify-between items-start flex-row mb-6">
               <View>
                 <Text className="font-pmedium text-sm text-gray-100">Welcome Back</Text>
@@ -64,13 +65,17 @@ const Customers = () => {
             </View>
           </View>
         )}
-        stickyHeaderIndices={[0]}
+      />
+    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+      <FlatList
         data={customers}
         renderItem={({ item }) => <AllCustomers customer={item} />}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={{ paddingBottom: 16 }}
         pagingEnabled={true}
       />
+      </ScrollView>
+      <StatusBar backgroundColor="#161622" style="light" />
     </SafeAreaView>
   );
 };

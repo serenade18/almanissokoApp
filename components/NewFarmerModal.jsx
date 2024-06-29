@@ -4,7 +4,7 @@ import { icons } from '../constants';
 import { useNavigation } from 'expo-router';
 import { KeyboardAvoidingView } from 'react-native';
 import { saveFarmer } from '../lib/actions';
-import moment from 'moment';
+import { StatusBar } from 'expo-status-bar';
 
 const NewFarmerModal = ({ hideModal,  }) => {
     const [phone, setPhone] = useState('');
@@ -91,6 +91,7 @@ const NewFarmerModal = ({ hideModal,  }) => {
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
+        <StatusBar backgroundColor="#161622" style="light" />
     </ScrollView>
   )
 }

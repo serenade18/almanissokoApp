@@ -4,6 +4,7 @@ import { icons } from '../constants';
 import { KeyboardAvoidingView } from 'react-native';
 import { savePayment, fetchOrderById } from '../lib/actions';
 import { Picker } from '@react-native-picker/picker';
+import { StatusBar } from 'expo-status-bar';
 
 const NewPaymentModal = ({ hideModal }) => {
 
@@ -161,7 +162,7 @@ const NewPaymentModal = ({ hideModal }) => {
                 <View className="pl-4 pb-3 pr-4">
                     <TextInput
                         className="bg-black-200 border-2 text-white border-secondary-200 rounded-2xl"
-                        placeholder='Rider'
+                        placeholder='Payment'
                         placeholderTextColor="#888"
                         value={payment}
                         onChangeText={setPayment}
@@ -181,6 +182,7 @@ const NewPaymentModal = ({ hideModal }) => {
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>
+            <StatusBar backgroundColor="#161622" style="light" />
         </ScrollView>
     );
 };
