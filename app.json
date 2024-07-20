@@ -1,35 +1,40 @@
 {
   "expo": {
-    "name": "almanissoko-app",
-    "slug": "almanissoko-app",
+    "name": "almanissoko",
+    "slug": "almanissoko",
+    "scheme": "almanissoko",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "jsEngine": "hermes",
     "splash": {
-      "image": "./assets/logo192.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#161622"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#161622"
       },
-      "package": "com.anonymous.almanissokoapp"
+      "package": "com.tarase.almanissoko"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font"
-    ]
+      "expo-router"
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "5cc6ef7a-e065-4d7a-8872-479fdefa537a"
+      }
+    }
   }
 }
