@@ -19,6 +19,7 @@ const NewOdersModal = ({ hideModal }) => {
     const [transporters, setTransporters] = useState('');
     const [rider, setRider] = useState('');
     const [comment, setComment] = useState('');
+    const [region, setRegion] = useState('');
     const [farmer_id, setFarmerId] = useState('');
     const [rice_type, setRiceType] = useState('');
     const [vat, setVat] = useState('');
@@ -190,6 +191,30 @@ const NewOdersModal = ({ hideModal }) => {
                         onChangeText={setTown}
                         style={{ padding: 10 }}
                     />
+                </View>
+                <View>
+                    <Text className="font-pmedium text-xl mt-0 text-white p-4">
+                        Region:
+                    </Text>
+                </View>
+                <View className="pl-4 pr-4">
+                    <View className="bg-black-200 border-2 text-white border-secondary-200 rounded-2xl">
+                        <Picker
+                            selectedValue={region}
+                            onValueChange={(itemValue) => setRegion(itemValue)}
+                            style={{ color: 'white' }}
+                        >
+                            <Picker.Item label="Select Region" value="" />
+                            <Picker.Item label="Nairobi" value="1" />
+                            <Picker.Item label="Nyanza" value="2" />
+                            <Picker.Item label="Central" value="3" />
+                            <Picker.Item label="Coast" value="4" />
+                            <Picker.Item label="Eastern" value="5" />
+                            <Picker.Item label="North Eastern" value="6" />
+                            <Picker.Item label="Western" value="7" />
+                            <Picker.Item label="Rift Valley" value="8" />
+                        </Picker>
+                    </View>
                 </View>
                 <View>
                     <Text className="font-pmedium text-xl mt-0 text-white p-4">
