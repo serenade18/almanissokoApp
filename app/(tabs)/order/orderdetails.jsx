@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, FlatList, TextInput, ScrollView, Alert, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ActivityIndicator, TextInput, ScrollView, Alert, SafeAreaView } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { icons } from '../../../constants';;
 import { KeyboardAvoidingView } from 'react-native';
@@ -99,7 +99,11 @@ const Orderdetails = () => {
   }; 
 
   if (loading) {
-    return <Text>Loading...</Text>;
+    return <SafeAreaView className="bg-primary h-full">
+        <View className="flex justify-center items-center">
+            <ActivityIndicator size="large" color="#ffffff" />
+        </View>   
+    </SafeAreaView>;
   }
 
   if (error) {

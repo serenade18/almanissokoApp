@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, SafeAreaView, ScrollView, StyleSheet, Modal, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Image, SafeAreaView, ScrollView, StyleSheet, Modal, FlatList, ActivityIndicator } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -49,8 +49,8 @@ const Customerdetails = () => {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.container}>
-        <Text>Loading...</Text>
+      <SafeAreaView style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#ffffff" />
       </SafeAreaView>
     );
   }
@@ -58,7 +58,7 @@ const Customerdetails = () => {
   if (error) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text>Error loading customer details</Text>
+        <Text style={{color: 'white'}}>Error loading customer details</Text>
       </SafeAreaView>
     );
   }
@@ -202,6 +202,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 16,
+  },
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: '#161622',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   backButton: {
     flexDirection: 'row',

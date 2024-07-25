@@ -3,8 +3,6 @@ import { View, Text, FlatList, Image, TouchableOpacity, Modal, ScrollView } from
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../../../lib/authProvider';
 import { useRouter } from 'expo-router';
-import { images } from '../../../constants';
-import SearchInput from '../../../components/SearchInput';
 import { fetchAllPayment } from '../../../lib/actions';
 import { StatusBar } from 'expo-status-bar';
 import AllPayments from '../../../components/AllPayments';
@@ -13,19 +11,17 @@ import Header from '../../../components/Header';
 const Payments = () => {
   const { user } = useAuth(); // Access user from the authentication context
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const [payments, setPayment] = useState([]);
 
   useEffect(() => {
     fetchData(); // Initial fetch
-    const interval = setInterval(() => {
-      fetchData(); // Fetch every 15 seconds
-    }, 10000);
-
-    return () => clearInterval(interval); // Cleanup
   }, []);
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       const response = await fetchAllPayment();
       // console.log("Orders", response.data.results)
@@ -35,15 +31,24 @@ const Payments = () => {
         console.error('Failed to fetch payment:', response.message);
       }
     } catch (error) {
+      setError(error);
       console.error('Error fetching payments data:', error);
+    } finally {
+      setLoading(false);
     }
   };
+  if (error) {
+    return <Text>Error loading orders</Text>;
+  }
   
   return (
     <SafeAreaView className="bg-primary h-full">
     <Header title="All Payments" search="Search Payment" />
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        <FlatList
+        <FlatList // Boolean to show refresh indicator
+          ListEmptyComponent={() => (
+            loading ? <ActivityIndicator size="large" color="#ffffff" /> : <Text>No orders found</Text>
+          )}
           data={payments}
           renderItem={({ item }) => <AllPayments payment={item} />}
           keyExtractor={(item) => item.id.toString()}
