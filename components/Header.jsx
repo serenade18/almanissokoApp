@@ -4,7 +4,7 @@ import { useAuth } from '../lib/authProvider';
 import { images } from '../constants';
 import SearchInput from './SearchInput';
 
-const Header = ({ title, search }) => {
+const Header = ({ title, search,onSearch }) => {
     const { user } = useAuth(); // Access user from the authentication context
 
     return (
@@ -22,7 +22,7 @@ const Header = ({ title, search }) => {
                 </View>
                 </View>
 
-                <SearchInput placeholder={search} />
+                <SearchInput placeholder={search} onSearch={onSearch} />
 
                 <View className="w-full flex-1 pt-5 pb-2">
                 <Text className="text-lg font-pregular text-gray-100 mb-2">

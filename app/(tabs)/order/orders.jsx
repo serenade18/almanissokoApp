@@ -15,21 +15,28 @@ const Orders = () => {
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(''); // Add state for search query
 
   useEffect(() => {
     fetchData(1); // Initial fetch
   }, []);
 
-  const fetchData = async (pageNumber) => {
+  useEffect(() => {
+    console.log('Fetching data with search query:', searchQuery);
+    fetchData(1); // Fetch data when search query changes, reset to page 1
+  }, [searchQuery]);
+
+  const fetchData = async (pageNumber = 1) => {
     if (loadingMore) return; // Prevent multiple fetches
 
     setLoading(pageNumber === 1);
     setLoadingMore(pageNumber > 1);
 
     try {
-      const response = await fetchAllOrders(pageNumber); // Fetch orders with pagination
+      const response = await fetchAllOrders(pageNumber, searchQuery); // Fetch orders with pagination
       if (response.error === false) {
-        const newOrders = response.data.results;
+        const newOrders = response.data.results || [];
+        consorle.log('New orders:', newOrders); // Log the fetched orders
         setOrders(prevOrders => 
           pageNumber === 1 ? newOrders : [...prevOrders, ...newOrders]
         );
@@ -62,7 +69,7 @@ const Orders = () => {
 
   return (
     <SafeAreaView className="bg-primary h-full">
-      <Header title="All Orders" search="Search Orders" />
+      <Header title="All Orders" search="Search Orders" onSearch={setSearchQuery} />
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <FlatList
           onRefresh={() => fetchData(1)} // Function to call on refresh

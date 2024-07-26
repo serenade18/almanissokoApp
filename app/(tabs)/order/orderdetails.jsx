@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, ActivityIndicator, TextInput, ScrollView, Alert, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ActivityIndicator, TextInput, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { icons } from '../../../constants';;
 import { KeyboardAvoidingView } from 'react-native';
@@ -99,11 +99,11 @@ const Orderdetails = () => {
   }; 
 
   if (loading) {
-    return <SafeAreaView className="bg-primary h-full">
-        <View className="flex justify-center items-center">
-            <ActivityIndicator size="large" color="#ffffff" />
-        </View>   
-    </SafeAreaView>;
+    return (
+    <SafeAreaView style={styles.loadingContainer}>
+      <ActivityIndicator size="large" color="#ffffff" />
+    </SafeAreaView>
+  );
   }
 
   if (error) {
@@ -401,3 +401,13 @@ const Orderdetails = () => {
 }
 
 export default Orderdetails
+
+const styles = StyleSheet.create({
+    
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: '#161622',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+})

@@ -49,16 +49,14 @@ const Farmerdetails = () => {
   }
  
   if (error) {
-    return <SafeAreaView className="bg-primary h-full">
-      <Text>Error loading farmer details</Text>
-    </SafeAreaView>;
+    return (
+      <SafeAreaView style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#ffffff" />
+      </SafeAreaView>
+    );
   }
 
   const farmerData = farmer.data;
-
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-KE', { style: 'currency', currency: 'KES' }).format(amount);
-  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -117,6 +115,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#161622',
+  },
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: '#161622',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
     flexDirection: 'row',

@@ -10,6 +10,8 @@ import EmptyState from '../../components/EmptyState';
 const Search = () => {
   const { query } = useLocalSearchParams();
   const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     if (query) {
@@ -21,8 +23,8 @@ const Search = () => {
     try {
       const searchResults = await globalSearch(query);
       const combinedResults = [
-        ...searchResults.categories.map(item => ({ ...item, type: 'category' })),
-        ...searchResults.services.map(item => ({ ...item, type: 'service' }))
+        // ...searchResults.categories.map(item => ({ ...item, type: 'category' })),
+        ...searchResults.customer.map(item => ({ ...item, type: 'customer' }))
       ];
 
       setResults(combinedResults);
@@ -40,7 +42,7 @@ const Search = () => {
         keyExtractor={(item, index) => item.id.toString() + '-' + index}
         renderItem={({ item }) =>(
           <View>
-            <Text>{item.service_name}</Text>
+            <Text>{item.name}</Text>
           </View>
         )}
         ListHeaderComponent={() => (
