@@ -43,9 +43,11 @@ const Farmerdetails = () => {
   };
 
   if (loading) {
-    return <SafeAreaView className="bg-primary h-full">
-      <Text>Loading...</Text>
-    </SafeAreaView>;
+    return (
+      <SafeAreaView style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#ffffff" />
+      </SafeAreaView>
+    );
   }
  
   if (error) {

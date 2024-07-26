@@ -1,7 +1,5 @@
-// 
-
 import React, { useState, useEffect } from 'react';
-import { ScrollView, Text, FlatList, Image, ActivityIndicator } from 'react-native';
+import { ScrollView, Text, FlatList, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { fetchAllOrders } from '../../../lib/actions';
 import AllOrders from '../../../components/AllOrders';
@@ -34,15 +32,17 @@ const Orders = () => {
 
     try {
       const response = await fetchAllOrders(pageNumber, searchQuery); // Fetch orders with pagination
-      if (response.error === false) {
-        const newOrders = response.data.results || [];
-        consorle.log('New orders:', newOrders); // Log the fetched orders
+      console.log('Fetch response:', response);
+
+      if (response) { // Ensure response is not null or undefined
+        const newOrders = response.results || [];
+        console.log('New orders:', newOrders); // Log the fetched orders
         setOrders(prevOrders => 
           pageNumber === 1 ? newOrders : [...prevOrders, ...newOrders]
         );
         setHasMore(newOrders.length > 0);
       } else {
-        console.error('Failed to fetch orders:', response.message);
+        console.error('Failed to fetch orders: No response or empty response');
       }
     } catch (error) {
       setError(error);
@@ -64,7 +64,7 @@ const Orders = () => {
   };
 
   if (error) {
-    return <Text>Error loading orders</Text>;
+    return <Text>Error loading orders: {error.message}</Text>;
   }
 
   return (
@@ -75,14 +75,15 @@ const Orders = () => {
           onRefresh={() => fetchData(1)} // Function to call on refresh
           refreshing={loading} // Boolean to show refresh indicator
           ListFooterComponent={() =>
-            loadingMore ? <ActivityIndicator size="large" color="#ffffff" /> : null
+            loading ? <ActivityIndicator size="large" color="#ffffff" /> : null
           }
           onEndReached={handleLoadMore} // Load more data when the end is reached
           onEndReachedThreshold={0.5} 
           data={orders}
-          renderItem={({ item }) => (
-            <AllOrders order={item} />
-          )}
+          renderItem={({ item }) => {
+            // console.log('Rendering item:', item); // Log each item being rendered
+            return <AllOrders order={item} />;
+          }}
           keyExtractor={(item) => item.id.toString()} // Ensure unique keys
           contentContainerStyle={{ paddingBottom: 16 }}
           pagingEnabled={true}
