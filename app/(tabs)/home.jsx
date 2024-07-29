@@ -12,6 +12,7 @@ import NewPaymentsModal from '../../components/NewPaymentModal';
 import NewCustomerModal from '../../components/NewCustomerModal';
 import NewFarmerModal from '../../components/NewFarmerModal';
 import { fetchHomePage } from '../../lib/actions';
+import Banner from '../../components/Banner';
 
 export default function Home() {
   const { user } = useAuth(); // Access user from the authentication context
@@ -23,7 +24,7 @@ export default function Home() {
   
   const [farmers, setFarmer] = useState(0);
   const [customers, setCustomers] = useState(0);
-  const [balance, setBalance] = useState(0);
+  const [kilos, setKilos] = useState(0);
 
   useEffect(() => {
     fetchData(); // Initial fetch
@@ -40,6 +41,7 @@ export default function Home() {
       // console.log("home api", response)
       if (response.error === false) {
         setCustomers(response.customer);
+        setKilos(response.kilos_today)
         setFarmer(response.farmer);
       } else {
         console.error('Failed to fetch homepage:', response.message);
@@ -112,9 +114,9 @@ export default function Home() {
               </View>
             </View>
 
-            <SearchInput />
+            <Banner kgs={kilos} />
 
-            <View className="w-full flex-1 pt-5 pb-2">
+            <View className="w-full flex-1 pt-3 pb-2">
               <Text className="text-lg font-pregular text-gray-100 mb-2">
                 Select Action
               </Text>

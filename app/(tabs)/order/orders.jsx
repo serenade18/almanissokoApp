@@ -13,14 +13,13 @@ const Orders = () => {
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(''); // Add state for search query
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    fetchData(1); // Initial fetch
+    fetchData(1); // Initial fetch 
   }, []);
 
   useEffect(() => {
-    console.log('Fetching data with search query:', searchQuery);
     fetchData(1); // Fetch data when search query changes, reset to page 1
   }, [searchQuery]);
 
@@ -32,14 +31,12 @@ const Orders = () => {
 
     try {
       const response = await fetchAllOrders(pageNumber, searchQuery); // Fetch orders with pagination
-      console.log('Fetch response:', response);
-
       if (response) { // Ensure response is not null or undefined
         const newOrders = response.results || [];
-        console.log('New orders:', newOrders); // Log the fetched orders
-        setOrders(prevOrders => 
-          pageNumber === 1 ? newOrders : [...prevOrders, ...newOrders]
-        );
+        // console.log('New orders:', newOrders); // Log the fetched orders
+
+        // If search query is present, replace the orders; otherwise, append the orders
+        setOrders(pageNumber === 1 || searchQuery ? newOrders : [...orders, ...newOrders]);
         setHasMore(newOrders.length > 0);
       } else {
         console.error('Failed to fetch orders: No response or empty response');
@@ -54,7 +51,7 @@ const Orders = () => {
   };
 
   const handleLoadMore = () => {
-    if (!loadingMore && hasMore) {
+    if (!loadingMore && hasMore && !searchQuery) {
       setPage(prevPage => {
         const nextPage = prevPage + 1;
         fetchData(nextPage);
@@ -81,7 +78,6 @@ const Orders = () => {
           onEndReachedThreshold={0.5} 
           data={orders}
           renderItem={({ item }) => {
-            // console.log('Rendering item:', item); // Log each item being rendered
             return <AllOrders order={item} />;
           }}
           keyExtractor={(item) => item.id.toString()} // Ensure unique keys

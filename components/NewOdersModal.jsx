@@ -97,7 +97,7 @@ const NewOdersModal = ({ hideModal }) => {
         }
        
         try {
-            const response = await bookNow(name, phone, customer_id, town, kgs, packaging, discount, transport, transporters, rider, comment, farmer_id, rice_type, vat, farmer_price, price, amount);
+            const response = await bookNow(name, phone, customer_id, town, region, kgs, packaging, discount, transport, transporters, rider, comment, farmer_id, rice_type, vat, farmer_price, price, amount);
             console.log("response", response)
             Alert.alert('Success', 'Order Placed Succesfully');
             hideModal();
@@ -356,6 +356,7 @@ const NewOdersModal = ({ hideModal }) => {
                         >
                             <Picker.Item label="Select Rice Type" value="" />
                             <Picker.Item label="Pishori" value="1" />
+                            <Picker.Item label="Brown" value="3" />
                             <Picker.Item label="Komboka" value="2" />
                         </Picker>
                     </View>

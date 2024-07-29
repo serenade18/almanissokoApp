@@ -152,7 +152,7 @@ const Customers = () => {
   };
 
   const handleLoadMore = () => {
-    if (!loadingMore && hasMore) {
+    if (!loadingMore && hasMore && !searchQuery) {
       setPage(prevPage => {
         const nextPage = prevPage + 1;
         fetchData(nextPage);
