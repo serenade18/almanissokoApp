@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, Text, FlatList, ActivityIndicator } from 'react-native';
+import { ScrollView, Text, FlatList, ActivityIndicator, Alert, View, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { fetchAllOrders } from '../../../lib/actions';
+import { fetchAllOrders, deleteOrders } from '../../../lib/actions';
 import AllOrders from '../../../components/AllOrders';
 import { StatusBar } from 'expo-status-bar';
 import Header from '../../../components/Header';
@@ -60,6 +60,35 @@ const Orders = () => {
     }
   };
 
+  const handleDeleteOrder = (orderId) => {
+    console.log(`Attempting to delete order with ID: ${orderId}`);
+    Alert.alert(
+      'Confirm Delete',
+      'Are you sure you want to delete this order?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          onPress: async () => {
+            try {
+              const deleteResponse = await deleteOrders(orderId); // Call deleteOrders and get the response
+              console.log("Delete response:", deleteResponse);
+              await fetchData(1); // Refresh the data
+            } catch (error) {
+              console.error('Error deleting order:', error);
+            }
+          },
+          style: 'destructive',
+        },
+      ],
+      { cancelable: true }
+    );
+};
+
+
   if (error) {
     return <Text>Error loading orders: {error.message}</Text>;
   }
@@ -67,27 +96,44 @@ const Orders = () => {
   return (
     <SafeAreaView className="bg-primary h-full">
       <Header title="All Orders" search="Search Orders" onSearch={setSearchQuery} />
-      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        <FlatList
-          onRefresh={() => fetchData(1)} // Function to call on refresh
-          refreshing={loading} // Boolean to show refresh indicator
-          ListFooterComponent={() =>
-            loading ? <ActivityIndicator size="large" color="#ffffff" /> : null
-          }
-          onEndReached={handleLoadMore} // Load more data when the end is reached
-          onEndReachedThreshold={0.5} 
-          data={orders}
-          renderItem={({ item }) => {
-            return <AllOrders order={item} />;
-          }}
-          keyExtractor={(item) => item.id.toString()} // Ensure unique keys
-          contentContainerStyle={{ paddingBottom: 16 }}
-          pagingEnabled={true}
-        />
-      </ScrollView>
+      <View style={styles.container}>
+        {loading && (
+          <ActivityIndicator size="large" color="#ffffff" />
+        )}
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <FlatList
+            onRefresh={() => fetchData(1)} // Function to call on refresh
+            refreshing={loading} // Boolean to show refresh indicator
+            ListFooterComponent={() =>
+              loadingMore ? <ActivityIndicator size="large" color="#ffffff" /> : null
+            }
+            onEndReached={handleLoadMore} // Load more data when the end is reached
+            onEndReachedThreshold={0.5} 
+            data={orders}
+            renderItem={({ item }) => {
+              return <AllOrders order={item} onDelete={handleDeleteOrder} />;
+            }}
+            keyExtractor={(item) => item.id.toString()} // Ensure unique keys
+            contentContainerStyle={{ paddingBottom: 16 }}
+            pagingEnabled={true}
+          />
+        </ScrollView>
+      </View>
       <StatusBar backgroundColor="#161622" style="light" />
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    position: 'relative',
+  },
+  loadingIndicator: {
+    position: 'absolute',
+    top: 0,
+    alignSelf: 'center',
+  },
+});
 
 export default Orders;

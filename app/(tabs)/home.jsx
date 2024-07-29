@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, FlatList, Image, ActivityIndicator, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../../constants';
-import SearchInput from '../../components/SearchInput';
 import { StatusBar } from 'expo-status-bar';
 import { useAuth } from '../../lib/authProvider';
 import { useRouter } from 'expo-router';
@@ -21,6 +20,7 @@ export default function Home() {
   const [showPaymentModal, setShowPaymentModal] = useState(false); 
   const [showFarmerModal, setShowFarmerModal] = useState(false); 
   const [showCustomerModal, setShowCustomerModal] = useState(false); 
+  const [loading, setLoading] = useState(true);
   
   const [farmers, setFarmer] = useState(0);
   const [customers, setCustomers] = useState(0);
@@ -43,6 +43,7 @@ export default function Home() {
         setCustomers(response.customer);
         setKilos(response.kilos_today)
         setFarmer(response.farmer);
+        setLoading(false)
       } else {
         console.error('Failed to fetch homepage:', response.message);
       }
@@ -123,6 +124,8 @@ export default function Home() {
             </View>
           </View>
         )}
+        onRefresh={() => fetchData(1)} // Function to call on refresh
+        refreshing={loading}
         data={data}
         renderItem={({ item }) => (
           <Card
