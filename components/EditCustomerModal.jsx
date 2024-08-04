@@ -11,20 +11,19 @@ const EditCustomerModal = ({ hideModal, customer }) => {
     const [phone, setPhone] = useState(customer?.phone || '');
     const [name, setName] = useState(customer?.name || '');
     const [secondary_phone, setSecondaryPhone] = useState(customer?.secondary_phone || '');
-    const [alternative_phone, setAlternativePhone] = useState(customer?.alternative_phone || '');
     const [region, setRegion] = useState(customer?.region || '');
     const [town, setTown] = useState(customer?.town || '');
 
     const handleBooking = async () => {
         if (
-            !name || !phone || !secondary_phone || !alternative_phone || !town || !region 
+            !name || !phone || !secondary_phone || !town || !region 
         ) {
             Alert.alert('Error', 'All fields are required.');
             return;
         }
 
         try {
-            const response = await editCustomer(name, phone, secondary_phone, alternative_phone, town, region);
+            const response = await editCustomer(name, phone, secondary_phone, town, region);
             console.log("response", response)
             Alert.alert('Success', 'Customer Edited Successfully');
             hideModal();
@@ -96,21 +95,6 @@ const EditCustomerModal = ({ hideModal, customer }) => {
                         placeholderTextColor="#888"
                         value={secondary_phone}
                         onChangeText={setSecondaryPhone}
-                        style={{ padding: 10 }}
-                    />
-                </View>
-                <View>
-                    <Text className="font-pmedium text-xl mt-0 text-white p-4">
-                    Alternative Contact:
-                    </Text>
-                </View>
-                <View className="pl-4 pr-4">
-                    <TextInput
-                        className="bg-black-200 border-2 text-white border-secondary-200 rounded-2xl"
-                        placeholder='Phone'
-                        placeholderTextColor="#888"
-                        value={alternative_phone}
-                        onChangeText={setAlternativePhone}
                         style={{ padding: 10 }}
                     />
                 </View>

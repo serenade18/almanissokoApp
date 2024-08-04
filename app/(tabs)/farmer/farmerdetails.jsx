@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, SafeAreaView, ScrollView, StyleSheet, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Image, SafeAreaView, ScrollView, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -74,11 +74,7 @@ const Farmerdetails = () => {
         <View style={styles.profileContainer}>
           <Image source={images.profile} style={styles.profileImage} resizeMode="contain" />
           <Text style={styles.profileName}>{farmerData?.name}</Text>
-          <Text style={styles.profileTown}>
-            <TouchableOpacity onPress={()=> setShowFarmerModal(true)}>
-              <Feather name="edit-3" size={24} color="white" />
-            </TouchableOpacity>
-          </Text>
+          
         </View>
 
         

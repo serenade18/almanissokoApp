@@ -5,6 +5,7 @@ import { KeyboardAvoidingView } from 'react-native';
 import { bookNow, fetchCustomerByName, fetchFarmerOnly } from '../lib/actions';
 import { Picker } from '@react-native-picker/picker';
 import { StatusBar } from 'expo-status-bar';
+import CustomButton from './CustomButton';
  
 const NewOdersModal = ({ hideModal }) => {
 
@@ -29,6 +30,7 @@ const NewOdersModal = ({ hideModal }) => {
     const [customers, setCustomers] = useState([]);
     const [farmers, setFarmers] = useState([]);
     const [customerNotFound, setCustomerNotFound] = useState(false);
+    const [isSubmitting, setSubmitting] = useState(false);
 
     useEffect(() => {
         const numberOfKilosFloat = parseFloat(kgs);
@@ -88,13 +90,15 @@ const NewOdersModal = ({ hideModal }) => {
 
     const handleBooking = async () => {
         if (
-            !name || !phone || !town || !kgs || !packaging || !discount || !transport || 
+            !name || !phone || !town || !region || !kgs || !packaging || !discount || !transport || 
             !transporters || !rider || !comment || !farmer_id || !rice_type || !vat || !farmer_price || 
             !price || !amount
         ) {
             Alert.alert('Error', 'All fields are required.');
             return;
         }
+
+        setSubmitting(true);
        
         try {
             const response = await bookNow(name, phone, customer_id, town, region, kgs, packaging, discount, transport, transporters, rider, comment, farmer_id, rice_type, vat, farmer_price, price, amount);
@@ -104,6 +108,8 @@ const NewOdersModal = ({ hideModal }) => {
         } catch (error) {
             Alert.alert('Error', 'Failed to book the Order.');
             console.error('Booking error:', error.message);
+        } finally {
+            setSubmitting(false);
         }
     };
 
@@ -426,12 +432,12 @@ const NewOdersModal = ({ hideModal }) => {
                     />
                 </View>
                 <View className="p-4">
-                    <TouchableOpacity 
-                        onPress={handleBooking}
-                        className="w-full bg-secondary rounded-2xl border-1 border-white p-4 items-center"
-                    >
-                        <Text className=" text-white font-pmedium">Confirm & Book</Text>
-                    </TouchableOpacity>
+                    <CustomButton
+                        title="Confirm & Book"
+                        handlePress={handleBooking}
+                        containerStyles="mt-7"
+                        isLoading={isSubmitting}
+                    />
                 </View>
             </KeyboardAvoidingView>
             <StatusBar backgroundColor="#161622" style="light" />

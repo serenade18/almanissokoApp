@@ -4,32 +4,36 @@ import { icons } from '../constants';
 import { Picker } from '@react-native-picker/picker'
 import { KeyboardAvoidingView } from 'react-native';
 import { saveCustomer } from '../lib/actions';
-import { StatusBar } from 'expo-status-bar';
+import CustomButton from './CustomButton';
 
 const NewCustomerModal = ({ hideModal,  }) => {
     const [phone, setPhone] = useState('');
     const [name, setName] = useState('');
     const [secondary_phone, setSecondaryPhone] = useState('');
-    const [alternative_phone, setAlternativePhone] = useState('');
     const [region, setRegion] = useState('');
     const [town, setTown] = useState('');
+    const [isSubmitting, setSubmitting] = useState(false);
 
     const handleBooking = async () => {
         if (
-            !name || !phone || !secondary_phone || !alternative_phone || !town || !region 
+            !name || !phone || !secondary_phone || !town || !region 
         ) {
             Alert.alert('Error', 'All fields are required.');
             return;
         }
 
+        setSubmitting(true);
+
         try {
-            const response = await saveCustomer(name, phone, secondary_phone, alternative_phone, town, region);
+            const response = await saveCustomer(name, phone, secondary_phone, town, region);
             console.log("response", response)
             Alert.alert('Success', 'Customer Added');
             hideModal();
         } catch (error) {
             Alert.alert('Error', 'Failed to book the Order.');
             console.error('Booking error:', error.message);
+        } finally {
+            setSubmitting(false);
         }
     };
 
@@ -98,21 +102,6 @@ const NewCustomerModal = ({ hideModal,  }) => {
                         style={{ padding: 10 }}
                     />
                 </View>
-                <View>
-                    <Text className="font-pmedium text-xl mt-0 text-white p-4">
-                    Alternative Contact:
-                    </Text>
-                </View>
-                <View className="pl-4 pr-4">
-                    <TextInput
-                        className="bg-black-200 border-2 text-white border-secondary-200 rounded-2xl"
-                        placeholder='Phone'
-                        placeholderTextColor="#888"
-                        value={alternative_phone}
-                        onChangeText={setAlternativePhone}
-                        style={{ padding: 10 }}
-                    />
-                </View>
                 
                 <View>
                     <Text className="font-pmedium text-xl mt-0 text-white p-4">
@@ -154,15 +143,13 @@ const NewCustomerModal = ({ hideModal,  }) => {
                     </View>
                 </View>
                 <View className="pl-4 pt-4 pr-4 mb-10">
-                    <TouchableOpacity
-                        className="bg-secondary-200 rounded-2xl"
-                        onPress={handleBooking}
-                        style={{ padding: 15 }}
-                    >
-                        <Text className="text-white font-pmedium text-xl text-center">
-                            Add Customer
-                        </Text>
-                    </TouchableOpacity>
+                    
+                    <CustomButton
+                        title="Add Customer"
+                        handlePress={handleBooking}
+                        containerStyles="mt-7"
+                        isLoading={isSubmitting}
+                    />
                 </View>
             </KeyboardAvoidingView>
         </ScrollView>
